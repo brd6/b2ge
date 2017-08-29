@@ -12,33 +12,33 @@
 
 namespace b2ge
 {
-  void Debug::log(std::string const & message, DebugType type)
+  void Debug::log(std::string const &message, DebugType type)
   {
     switch (type)
-      {
+    {
       case DebugType::Error :
-      Debug::logError(message);
-      break;
+	Debug::logError(message);
+	break;
       case DebugType::Warning:
-      Debug::logWarning(message);
-      break;
+	Debug::logWarning(message);
+	break;
       default:
-      writeMessage("[Info] " + message, DebugType::Info);
-      break;
-      }
+	writeMessage("[Info] " + message, DebugType::Info);
+	break;
+    }
   }
 
-  void Debug::logWarning(std::string const & message)
+  void Debug::logWarning(std::string const &message)
   {
     writeMessage("[Warning] " + message, DebugType::Warning);
   }
 
-  void Debug::logError(std::string const & message)
+  void Debug::logError(std::string const &message)
   {
     writeMessage("[Error] " + message, DebugType::Error);
   }
 
-  void Debug::writeMessage(std::string const & message, DebugType type)
+  void Debug::writeMessage(std::string const &message, DebugType type)
   {
 #if WIN32
     writeMessageInColor(message, type);
@@ -47,7 +47,7 @@ namespace b2ge
 #endif // WIN32
   }
 
-  void Debug::writeMessageInColor(std::string const & message, DebugType type)
+  void Debug::writeMessageInColor(std::string const &message, DebugType type)
   {
 #if WIN32
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
