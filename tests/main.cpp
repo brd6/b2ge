@@ -4,10 +4,6 @@
 
 #include "gtest/gtest.h"
 
-TEST(ExampleTest, Greet) {
-  EXPECT_EQ(true, true);
-}
-
 int main(int argc, char **argv)
 {
   ::testing::InitGoogleTest(&argc, argv);

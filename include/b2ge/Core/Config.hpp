@@ -7,7 +7,8 @@
 
 namespace b2ge
 {
-  #define COMPONENT_BITSET 48;
+  constexpr int COMPONENT_BITSET = 48;
+  //#define COMPONENT_BITSET 48;
 }
 
 #endif /* !_CONFIG_H_ */

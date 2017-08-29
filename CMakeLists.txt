@@ -23,7 +23,7 @@ endif()
 if (ENABLE_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
-endif ()
+endif()
 
 #########################################
 
@@ -31,11 +31,16 @@ endif ()
 set(B2GE_INCLUDE include/b2ge)
 include_directories(${B2GE_INCLUDE})
 
+file(GLOB_RECURSE SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+
+file(GLOB_RECURSE INCLUDE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp)
+
 # Source files
-set(SOURCE_FILES src/b2ge/Util/Debug.cpp)
+set(SOURCE_FILES ${SOURCE_FILES} ${INCLUDE_FILES})
 
 # Lib configuration
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
+
 
 # Executable
 #add_executable(${PROJECT_NAME}-bin ${SOURCE_FILES})

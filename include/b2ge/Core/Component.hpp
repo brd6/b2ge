@@ -9,6 +9,7 @@
 
 namespace b2ge
 {
+  class Entity;
   class Component
   {
    public:
