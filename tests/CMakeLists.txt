@@ -2,9 +2,11 @@
 cmake_minimum_required(VERSION 3.0)
 project(b2geTest)
 
-set(GTEST_LIB_DIR ext/googletest)
+set(GTEST_LIB_DIR ../external/googletest)
+#set(GTEST_LIB_DIR ../external/googletest/googletest CACHE STRING "Google Test source root")
 
-add_subdirectory(${GTEST_LIB_DIR})
+
+add_subdirectory(${GTEST_LIB_DIR} ../external/)
 
 include_directories(${GTEST_LIB_DIR}/googletest/include)
 include_directories(${GTEST_LIB_DIR}/googlemock/include)
