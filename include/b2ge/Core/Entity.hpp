@@ -9,6 +9,7 @@
 # include <memory>
 # include <vector>
 # include <bitset>
+#include <algorithm>
 # include "Component.hpp"
 # include "ComponentIdHandler.hpp"
 
@@ -57,6 +58,13 @@ namespace b2ge
       mComponentBitset[getComponentTypeId<TComponent>()] = true;
     }
 
+    template <typename TComponent>
+    void unregisterComponent()
+    {
+      mComponentArray[getComponentTypeId<TComponent>()] = nullptr;
+      mComponentBitset[getComponentTypeId<TComponent>()] = false;
+    }
+
    public:
     Entity();
     Entity(std::string const &name);
@@ -96,6 +104,30 @@ namespace b2ge
 
       auto component(mComponentArray[getComponentTypeId<TComponent>()]);
       return *static_cast<TComponent *>(component);
+    }
+
+    template <typename TComponent>
+    void removeComponent()
+    {
+      if (!hasComponent<TComponent>())
+	throw std::invalid_argument("Access to a not entity's component");
+
+      auto currComponent = mComponentArray[getComponentTypeId<TComponent>()];
+
+      auto it = std::find_if(std::begin(mComponents),
+			     std::end(mComponents),
+			     [currComponent]
+				     (std::unique_ptr<Component> const &component){
+			       return component.get() == currComponent;
+			     });
+
+      if (it == std::end(mComponents))
+	return ;
+
+      it->reset();
+      mComponents.erase(it);
+
+      unregisterComponent<TComponent>();
     }
 
     template <typename TComponent>

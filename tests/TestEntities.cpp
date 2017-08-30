@@ -92,6 +92,17 @@ TEST(TestEntities, TryGetComponentThatDoesntExist)
   EXPECT_THROW(entity->getComponent<Vector2D>(), std::logic_error);
 }
 
+TEST(TestEntities, RemoveComponent)
+{
+  auto entity = new b2ge::Entity();
+
+  entity->addComponent<Vector2D>();
+
+  entity->removeComponent<Vector2D>();
+
+  EXPECT_EQ(entity->hasComponent<Vector2D>(), false);
+}
+
 TEST(TestEntities, AddEntityToEntityManager)
 {
   b2ge::EntityManager em;
