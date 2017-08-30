@@ -2,6 +2,7 @@
 // Created by brd6 on 29/08/17.
 //
 
+#include "Core/Config.hpp"
 #include <Core/Entity.hpp>
 
 namespace b2ge
@@ -77,5 +78,8 @@ namespace b2ge
   {
     mComponents.erase(std::begin(mComponents), std::end(mComponents));
     mComponents.clear();
+
+    mComponentArray.fill(0);
+    mComponentBitset.reset();
   }
 }

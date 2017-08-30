@@ -105,6 +105,39 @@ TEST(TestEntities, RemoveComponent)
   EXPECT_EQ(entity->hasComponent<Vector2D>(), false);
 }
 
+TEST(TestEntities, RemoveAllComponents)
+{
+  auto entity = new b2ge::Entity();
+
+  entity->addComponent<Vector2D>();
+  entity->addComponent<Sprite>();
+
+  EXPECT_EQ(entity->hasComponent<Vector2D>(), true);
+  EXPECT_EQ(entity->hasComponent<Sprite>(), true);
+
+  entity->removeComponent<Vector2D>();
+  entity->removeComponent<Sprite>();
+
+  EXPECT_EQ(entity->hasComponent<Vector2D>(), false);
+  EXPECT_EQ(entity->hasComponent<Sprite>(), false);
+}
+
+TEST(TestEntities, RemoveAllComponents2)
+{
+  auto entity = new b2ge::Entity();
+
+  entity->addComponent<Vector2D>();
+  entity->addComponent<Sprite>();
+
+  EXPECT_EQ(entity->hasComponent<Vector2D>(), true);
+  EXPECT_EQ(entity->hasComponent<Sprite>(), true);
+
+  entity->removeAllComponents();
+
+  EXPECT_EQ(entity->hasComponent<Vector2D>(), false);
+  EXPECT_EQ(entity->hasComponent<Sprite>(), false);
+}
+
 TEST(TestEntities, AddEntityToEntityManager)
 {
   b2ge::EntityManager em;
