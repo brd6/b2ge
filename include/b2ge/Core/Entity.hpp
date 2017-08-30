@@ -23,7 +23,7 @@ namespace b2ge
    private:
     Scene *mScene;
 
-    // friend class EntityManager;
+    friend class EntityManager;
 
     bool mIsActive;
 
@@ -45,6 +45,8 @@ namespace b2ge
 
     std::size_t mId;
 
+    std::string mName;
+
    private:
     std::size_t getNextId();
 
@@ -57,6 +59,7 @@ namespace b2ge
 
    public:
     Entity();
+    Entity(std::string const &name);
     ~Entity() = default;
 
     std::size_t getId() const;
@@ -105,6 +108,8 @@ namespace b2ge
     bool operator!=(Entity const &entity) const;
 
     Scene &getScene() const;
+
+    std::string const &getName() const;
 
   };
 }

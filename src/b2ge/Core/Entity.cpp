@@ -14,9 +14,16 @@ namespace b2ge
   }
 
   Entity::Entity():
+	  Entity("")
+  {
+
+  }
+
+  Entity::Entity(std::string const &name):
 	  mIsActive(true),
 	  mIsDestroyed(false),
-	  mId(getNextId())
+	  mId(getNextId()),
+	  mName(name)
   {
 
   }
@@ -48,7 +55,7 @@ namespace b2ge
 
   bool Entity::operator==(Entity const &entity) const
   {
-    return entity.getId() == this->getId();
+    return entity.getId() == this->getId() && entity.mScene == this->mScene;
   }
 
   bool Entity::operator!=(Entity const &entity) const
@@ -59,5 +66,10 @@ namespace b2ge
   Scene &Entity::getScene() const
   {
     return *mScene;
+  }
+
+  std::string const &Entity::getName() const
+  {
+    return mName;
   }
 }

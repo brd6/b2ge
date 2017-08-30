@@ -2,6 +2,7 @@
 // Created by brd6 on 29/08/17.
 //
 
+#include <Manager/EntityManager.hpp>
 #include "gtest/gtest.h"
 #include "Core/Entity.hpp"
 #include "Components.hpp"
@@ -11,6 +12,43 @@ TEST(TestEntities, CreateEntity)
   auto entity = new b2ge::Entity();
 
   EXPECT_EQ(entity->isActive() && !entity->isDestroyed(), true);
+}
+
+TEST(TestEntities, CreateEntityWithEntityManager)
+{
+  b2ge::EntityManager em;
+
+  auto &entity = em.createEntity();
+
+  EXPECT_EQ(entity.isActive() && !entity.isDestroyed(), true);
+}
+
+TEST(TestEntities, GetEntityByIdFromEntityManager)
+{
+  b2ge::EntityManager em;
+
+  auto &entity = em.createEntity();
+
+  // retrieve the entity ID
+  auto entityId = entity.getId();
+
+  auto &entity2 = em.get(entityId);
+
+  EXPECT_EQ(entity, entity2);
+}
+
+TEST(TestEntities, GetEntityByNameFromEntityManager)
+{
+  b2ge::EntityManager em;
+
+  std::string entityName{"myEntity"};
+
+  // entity reference is not keeped immediately
+  em.createEntity(entityName);
+
+  auto &entity = em.get(entityName);
+
+  EXPECT_EQ(entity.getName(), entityName);
 }
 
 TEST(TestEntities, AddComponent)
@@ -52,4 +90,67 @@ TEST(TestEntities, TryGetComponentThatDoesntExist)
   auto entity = new b2ge::Entity();
 
   EXPECT_THROW(entity->getComponent<Vector2D>(), std::logic_error);
+}
+
+TEST(TestEntities, AddEntityToEntityManager)
+{
+  b2ge::EntityManager em;
+
+  auto entity = new b2ge::Entity();
+
+  EXPECT_NO_THROW(em.add(entity));
+}
+
+TEST(TestEntities, AddEntityToEntityManager2)
+{
+  b2ge::EntityManager em;
+
+  EXPECT_NO_THROW(em.createEntity());
+}
+
+TEST(TestEntities, AddEntityWithComponentsToEntityManager)
+{
+  b2ge::EntityManager em;
+
+  auto &entity = em.createEntity();
+
+  EXPECT_NO_THROW(entity.addComponent<Vector2D>());
+  EXPECT_NO_THROW(entity.addComponent<Sprite>());
+}
+
+TEST(TestEntities, MultipleAddEntityToEntityManager)
+{
+  b2ge::EntityManager em;
+
+  EXPECT_NO_THROW(em.createEntity());
+  EXPECT_NO_THROW(em.createEntity());
+  EXPECT_NO_THROW(em.createEntity());
+  EXPECT_NO_THROW(em.createEntity());
+  EXPECT_NO_THROW(em.createEntity());
+  EXPECT_NO_THROW(em.createEntity());
+}
+
+TEST(TestEntities, MultipleAddEntityToEntityManager2)
+{
+  b2ge::EntityManager em;
+
+  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
+  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
+  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
+  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
+  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
+  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
+}
+
+TEST(TestEntities, MultipleAddAndGetEntityToEntityManager)
+{
+  b2ge::EntityManager em;
+
+  em.add(new b2ge::Entity("myEntity1"));
+  em.add(new b2ge::Entity("myEntity2"));
+  em.add(new b2ge::Entity("myEntity3"));
+
+  EXPECT_EQ(em.get("myEntity1").getName(), "myEntity1");
+  EXPECT_EQ(em.get("myEntity2").getName(), "myEntity2");
+  EXPECT_EQ(em.get("myEntity3").getName(), "myEntity3");
 }
