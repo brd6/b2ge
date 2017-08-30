@@ -56,13 +56,13 @@ namespace b2ge
     switch (type)
       {
 	// foreground + background * 16
-      case SfmlEngine::Debug::Error:
+      case DebugType::Error:
 	colorCmp = 12 + 0 * 16;
 	break;
-      case SfmlEngine::Debug::Warning:
+      case DebugType::Warning:
 	colorCmp = 14 + 0 * 16;
 	break;
-      case SfmlEngine::Debug::Log:
+      case DebugType::Info:
 	colorCmp = 15 + 0 * 16;
 	break;
       default:
