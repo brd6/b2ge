@@ -130,6 +130,8 @@ namespace b2ge
       unregisterComponent<TComponent>();
     }
 
+    void removeAllComponents();
+
     template <typename TComponent>
     bool hasComponent() const
     {

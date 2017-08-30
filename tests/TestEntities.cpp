@@ -98,6 +98,8 @@ TEST(TestEntities, RemoveComponent)
 
   entity->addComponent<Vector2D>();
 
+  EXPECT_EQ(entity->hasComponent<Vector2D>(), true);
+
   entity->removeComponent<Vector2D>();
 
   EXPECT_EQ(entity->hasComponent<Vector2D>(), false);

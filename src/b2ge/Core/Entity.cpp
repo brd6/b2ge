@@ -72,4 +72,10 @@ namespace b2ge
   {
     return mName;
   }
+
+  void Entity::removeAllComponents()
+  {
+    mComponents.erase(std::begin(mComponents), std::end(mComponents));
+    mComponents.clear();
+  }
 }
