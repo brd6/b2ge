@@ -22,8 +22,26 @@ namespace b2ge
 
     World *mWorld{nullptr};
 
+    std::bitset<COMPONENT_BITSET> mComponentRequiredBitset;
+
 //   protected:
 //    EntityManager &mEntityManager;
+
+   protected:
+    template <typename TComponent, typename TComponent2, typename ...TComponents>
+    void addComponentRequired()
+    {
+      addComponentRequired<TComponent>();
+      addComponentRequired<TComponent2, TComponents...>();
+    }
+
+    template <typename TComponent>
+    void addComponentRequired()
+    {
+      auto componentId = getClassTypeId<TComponent>();
+
+      mComponentRequiredBitset[componentId] = true;
+    }
 
    public:
     System() = default;
@@ -33,6 +51,11 @@ namespace b2ge
     virtual void initialize() {}
 
     SystemId getId() const { return mId; }
+
+    std::bitset<COMPONENT_BITSET> const &getComponentRequiredBitset() const
+    {
+      return mComponentRequiredBitset;
+    }
   };
 }
 

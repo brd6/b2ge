@@ -19,3 +19,23 @@ TEST(TestWorld, InvalidSystemManagerAccess)
 
   EXPECT_THROW(world.getSystemManager(), std::runtime_error);
 }
+
+TEST(TestWorld, ValideEntityManagerAccess)
+{
+  b2ge::World world;
+  auto *em = new b2ge::EntityManager();
+
+  world.setEntityManager(em);
+
+  EXPECT_NO_THROW(world.getEntityManager());
+}
+
+TEST(TestWorld, ValidSystemManagerAccess)
+{
+  b2ge::World world;
+  auto *sm = new b2ge::SystemManager();
+
+  world.setSystemManager(sm);
+
+  EXPECT_NO_THROW(world.getSystemManager());
+}
