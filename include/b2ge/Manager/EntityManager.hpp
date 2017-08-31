@@ -26,21 +26,27 @@ namespace b2ge
 
    public:
     EntityManager() = default;
+
     ~EntityManager() = default;
 
     EntityManager(EntityManager const &) = delete;
+
     EntityManager &operator=(EntityManager const &) = delete;
 
     void add(Entity *entity);
+
     Entity &get(std::size_t id);
+
     Entity &get(std::string const &name);
 
     Entity &createEntity();
+
     Entity &createEntity(std::string const &name);
 
     void removeEntitiesDestroyed();
 
     void setScene(Scene *scene);
+
     Scene &getScene();
 
   };

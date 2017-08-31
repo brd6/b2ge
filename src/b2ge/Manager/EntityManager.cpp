@@ -23,7 +23,7 @@ namespace b2ge
   Entity &EntityManager::get(std::string const &name)
   {
     auto it = std::find_if(std::begin(mEntities), std::end(mEntities),
-			   [name](auto &entity){
+			   [name](auto &entity) {
 			     return (entity.second->getName() == name);
 			   });
     if (it == std::end(mEntities))
@@ -49,7 +49,7 @@ namespace b2ge
   {
     mEntities.erase(
 	    std::find_if(std::begin(mEntities), std::end(mEntities),
-			 [](auto &entity){
+			 [](auto &entity) {
 			   return (entity.second->isDestroyed());
 			 }),
 	    std::end(mEntities)
@@ -61,7 +61,7 @@ namespace b2ge
     mScene = scene;
   }
 
-  Scene& EntityManager::getScene()
+  Scene &EntityManager::getScene()
   {
     return *mScene;
   }

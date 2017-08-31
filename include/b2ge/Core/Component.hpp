@@ -10,6 +10,7 @@
 namespace b2ge
 {
   class Entity;
+
   class Component
   {
    public:
@@ -17,6 +18,7 @@ namespace b2ge
 
    public:
     Component() = default;
+
     virtual ~Component() = default;
   };
 }

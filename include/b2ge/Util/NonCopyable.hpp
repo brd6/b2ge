@@ -7,15 +7,17 @@
 
 namespace b2ge
 {
-  template <typename T>
+  template<typename T>
   class NonCopyable
   {
    protected:
     NonCopyable() = default;
+
     virtual ~NonCopyable() = default;
 
    private:
     NonCopyable(NonCopyable const &) = delete;
+
     NonCopyable &operator=(NonCopyable const &) = delete;
   };
 }

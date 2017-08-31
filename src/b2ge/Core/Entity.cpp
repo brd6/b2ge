@@ -14,13 +14,13 @@ namespace b2ge
     return ++mNextId;
   }
 
-  Entity::Entity():
+  Entity::Entity() :
 	  Entity("")
   {
 
   }
 
-  Entity::Entity(std::string const &name):
+  Entity::Entity(std::string const &name) :
 	  mIsActive(true),
 	  mIsDestroyed(false),
 	  mId(getNextId()),

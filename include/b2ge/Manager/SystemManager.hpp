@@ -11,35 +11,35 @@
 
 namespace b2ge
 {
-    class SystemManager :
-        public NonCopyable
+  class SystemManager :
+	  public NonCopyable
+  {
+   private:
+    using systemPtr = std::unique_ptr<System>;
+    std::vector<systemPtr> mSystems;
+
+   public:
+    template<typename TSystem, typename... TArgs>
+    void add(TArgs &&... args)
     {
-    private:
-        using systemPtr = std::unique_ptr<System>;
-        std::vector<systemPtr> mSystems;
 
-    public:
-        template <typename TSystem, typename... TArgs>
-        void add(TArgs&&... args)
-        {
+    }
 
-        }
+    template<typename TSystem>
+    void get()
+    {
 
-        template <typename TSystem>
-        void get()
-        {
+    }
 
-        }
+    template<typename TSystem>
+    void remove()
+    {
 
-        template <typename TSystem>
-        void remove()
-        {
+    }
 
-        }
+    void removeAll();
 
-        void removeAll();
-
-    };
+  };
 }
 
 #endif //B2GE_SYSTEMMANAGER_HPP

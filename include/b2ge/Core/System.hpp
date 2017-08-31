@@ -10,19 +10,22 @@
 
 namespace b2ge
 {
-    class System :
-        public NonCopyable
-    {
-    private:
-        World &mWorld;
-        EntityManager &mEntityManager;
+  class System :
+	  public NonCopyable
+  {
+   private:
+    World &mWorld;
+    EntityManager &mEntityManager;
 
-    public:
-        System(World &world, EntityManager &entityManager) : mWorld(world), mEntityManager(entityManager) {};
-        virtual ~System() = default;
+   public:
+    System(World &world, EntityManager &entityManager) : mWorld(world), mEntityManager(entityManager)
+    {};
 
-        virtual void initialize() {};
-    };
+    virtual ~System() = default;
+
+    virtual void initialize()
+    {};
+  };
 }
 
 #endif //B2GE_SYSTEM_HPP

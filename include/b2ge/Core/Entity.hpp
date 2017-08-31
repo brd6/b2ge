@@ -42,7 +42,7 @@ namespace b2ge
      * Helper for component access
      */
     std::bitset<COMPONENT_BITSET> mComponentBitset;
-    std::array<Component*, COMPONENT_BITSET> mComponentArray;
+    std::array<Component *, COMPONENT_BITSET> mComponentArray;
 
     std::size_t mId;
 
@@ -51,14 +51,14 @@ namespace b2ge
    private:
     std::size_t getNextId();
 
-    template <typename TComponent>
+    template<typename TComponent>
     void registerComponent(TComponent *component)
     {
       mComponentArray[getComponentTypeId<TComponent>()] = component;
       mComponentBitset[getComponentTypeId<TComponent>()] = true;
     }
 
-    template <typename TComponent>
+    template<typename TComponent>
     void unregisterComponent()
     {
       mComponentArray[getComponentTypeId<TComponent>()] = nullptr;
@@ -67,19 +67,23 @@ namespace b2ge
 
    public:
     Entity();
+
     Entity(std::string const &name);
+
     ~Entity() = default;
 
     std::size_t getId() const;
 
     void setActive(bool isActive);
+
     bool isActive() const;
 
     void destroy();
+
     bool isDestroyed() const;
 
-    template <typename TComponent, typename... TArgs>
-    TComponent &addComponent(TArgs&&... args)
+    template<typename TComponent, typename... TArgs>
+    TComponent &addComponent(TArgs &&... args)
     {
       if (hasComponent<TComponent>())
 	throw std::logic_error("Component already exist on this entity");
@@ -96,7 +100,7 @@ namespace b2ge
       return *component;
     };
 
-    template <typename TComponent>
+    template<typename TComponent>
     TComponent &getComponent() const
     {
       if (!hasComponent<TComponent>())
@@ -106,7 +110,7 @@ namespace b2ge
       return *static_cast<TComponent *>(component);
     }
 
-    template <typename TComponent>
+    template<typename TComponent>
     void removeComponent()
     {
       if (!hasComponent<TComponent>())
@@ -117,12 +121,12 @@ namespace b2ge
       auto it = std::find_if(std::begin(mComponents),
 			     std::end(mComponents),
 			     [currComponent]
-				     (std::unique_ptr<Component> const &component){
+				     (std::unique_ptr<Component> const &component) {
 			       return component.get() == currComponent;
 			     });
 
       if (it == std::end(mComponents))
-	return ;
+	return;
 
       it->reset();
       mComponents.erase(it);
@@ -132,13 +136,14 @@ namespace b2ge
 
     void removeAllComponents();
 
-    template <typename TComponent>
+    template<typename TComponent>
     bool hasComponent() const
     {
       return mComponentBitset[getComponentTypeId<TComponent>()];
     }
 
     bool operator==(Entity const &entity) const;
+
     bool operator!=(Entity const &entity) const;
 
     Scene &getScene() const;

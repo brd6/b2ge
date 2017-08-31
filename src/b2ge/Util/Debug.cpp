@@ -5,7 +5,9 @@
 #include <iostream>
 
 #if WIN32
+
 #include <windows.h>
+
 #endif // WIN32
 
 #include "Util/Debug.hpp"
@@ -15,17 +17,17 @@ namespace b2ge
   void Debug::log(std::string const &message, DebugType type)
   {
     switch (type)
-    {
-      case DebugType::Error :
-	Debug::logError(message);
+      {
+	case DebugType::Error :
+	  Debug::logError(message);
 	break;
-      case DebugType::Warning:
-	Debug::logWarning(message);
+	case DebugType::Warning:
+	  Debug::logWarning(message);
 	break;
-      default:
-	writeMessage("[Info] " + message, DebugType::Info);
+	default:
+	  writeMessage("[Info] " + message, DebugType::Info);
 	break;
-    }
+      }
   }
 
   void Debug::logWarning(std::string const &message)
@@ -56,17 +58,17 @@ namespace b2ge
     switch (type)
       {
 	// foreground + background * 16
-      case DebugType::Error:
-	colorCmp = 12 + 0 * 16;
+	case DebugType::Error:
+	  colorCmp = 12 + 0 * 16;
 	break;
-      case DebugType::Warning:
-	colorCmp = 14 + 0 * 16;
+	case DebugType::Warning:
+	  colorCmp = 14 + 0 * 16;
 	break;
-      case DebugType::Info:
-	colorCmp = 15 + 0 * 16;
+	case DebugType::Info:
+	  colorCmp = 15 + 0 * 16;
 	break;
-      default:
-	break;
+	default:
+	  break;
       }
     SetConsoleTextAttribute(hConsole, colorCmp);
     std::cout << message << std::endl;

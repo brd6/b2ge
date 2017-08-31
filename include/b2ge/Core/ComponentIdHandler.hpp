@@ -16,7 +16,7 @@ namespace b2ge
     return lastId++;
   }
 
-  template <typename TComponent>
+  template<typename TComponent>
   inline ComponentId getComponentTypeId() noexcept
   {
     static ComponentId typeId{getUniqueComponentId()};

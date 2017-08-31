@@ -6,20 +6,25 @@
 
 namespace b2ge
 {
-    World::World():
-        mEntityManager(std::make_unique<EntityManager>()),
-        mSystemManager(std::make_unique<SystemManager>())
-    {
+  World::World() :
+	  mEntityManager(std::make_unique<EntityManager>()),
+	  mSystemManager(std::make_unique<SystemManager>())
+  {
 
-    }
+  }
 
-    EntityManager &World::getEntityManager() const
-    {
-        return *(mEntityManager.get());
-    }
+  EntityManager &World::getEntityManager() const
+  {
+    return *(mEntityManager.get());
+  }
 
-    SystemManager &World::getSystemManager() const
-    {
-        return *(mSystemManager.get());
-    }
+  SystemManager &World::getSystemManager() const
+  {
+    return *(mSystemManager.get());
+  }
+
+  void World::update(float deltaTime)
+  {
+
+  }
 }

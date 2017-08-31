@@ -11,18 +11,23 @@ namespace b2ge
 {
   class Debug
   {
-  public:
+   public:
     enum DebugType
     {
       Error,
       Warning,
       Info
     };
+
     static void log(std::string const &message, DebugType type = DebugType::Info);
+
     static void logWarning(std::string const &message);
+
     static void logError(std::string const &message);
-  private:
+
+   private:
     static void writeMessage(std::string const &message, DebugType type);
+
     static void writeMessageInColor(std::string const &message, DebugType type);
   };
 }
