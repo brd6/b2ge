@@ -1,5 +1,5 @@
 //
-// Created by bberd on 30/08/2017.
+// Created by brd6 on 30/08/2017.
 //
 
 #ifndef B2GE_SYSTEMMANAGER_HPP
