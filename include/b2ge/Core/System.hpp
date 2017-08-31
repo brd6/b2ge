@@ -11,22 +11,22 @@
 namespace b2ge
 {
   class EntityManager;
+  class World;
 
   class System
   {
    private:
     friend class SystemManager;
+
     SystemId mId{};
 
-   protected:
-    EntityManager &mEntityManager;
+    World *mWorld{nullptr};
+
+//   protected:
+//    EntityManager &mEntityManager;
 
    public:
-    explicit System(EntityManager &entityManager) :
-	    mEntityManager(entityManager)
-    {
-
-    }
+    System() = default;
 
     virtual ~System() = default;
 

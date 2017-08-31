@@ -17,7 +17,7 @@ namespace b2ge
     std::unique_ptr<SystemManager> mSystemManager;
 
    public:
-    World();
+    World() = default;
 
     virtual ~World() = default;
 
@@ -26,6 +26,12 @@ namespace b2ge
     EntityManager &getEntityManager() const;
 
     SystemManager &getSystemManager() const;
+
+    void setEntityManager(EntityManager *entityManager);
+
+    void setSystemManager(SystemManager *systemManager);
+
+//    void reset();
   };
 }
 

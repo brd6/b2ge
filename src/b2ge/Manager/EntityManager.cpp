@@ -9,8 +9,7 @@ namespace b2ge
 {
   void EntityManager::add(Entity *entity)
   {
-//    entity->mScene = mScene;
-
+    entity->mWorld = mWorld;
     std::unique_ptr<Entity> entityPtr{entity};
 
     mEntities[entity->getId()] = std::move(entityPtr);
@@ -56,5 +55,4 @@ namespace b2ge
   {
     return *(mEntities[id].get());
   }
-
 }

@@ -16,7 +16,9 @@ namespace b2ge
   class EntityManager
   {
    private:
-//    World &mWorld;
+    friend class World;
+
+    World *mWorld{nullptr};
 
     using entityPtr = std::unique_ptr<Entity>;
 
@@ -41,6 +43,7 @@ namespace b2ge
 
     Entity &createEntity(std::string const &name);
 
+   private:
     void removeEntitiesDestroyed();
 
   };

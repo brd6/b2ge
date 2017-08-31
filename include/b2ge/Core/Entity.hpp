@@ -16,10 +16,14 @@
 
 namespace b2ge
 {
+  class World;
+
   class Entity
   {
    private:
     friend class EntityManager;
+
+    World *mWorld;
 
     bool mIsActive;
 

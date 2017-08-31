@@ -11,13 +11,23 @@
 
 namespace b2ge
 {
+  class World;
+
   class SystemManager
   {
    private:
     using SystemPtr = std::unique_ptr<System>;
+
     std::unordered_map<SystemId, SystemPtr> mSystems;
 
+    friend class World;
+
+    World *mWorld{nullptr};
+
    public:
+    SystemManager() = default;
+    ~SystemManager() = default;
+
     template <typename TSystem, typename... TArgs>
     TSystem &add(TArgs &&... args)
     {
@@ -27,6 +37,9 @@ namespace b2ge
       TSystem *system(new TSystem(std::forward<TArgs>(args)...));
 
       system->mId = getClassTypeId<TSystem>();
+      system->mWorld = mWorld;
+
+      system->initialize();
 
       std::unique_ptr<System> systemPtr{system};
 
@@ -66,10 +79,7 @@ namespace b2ge
       return mSystems.count(systemId) > 0;
     }
 
-    bool has(SystemId id)
-    {
-      return mSystems.count(id) > 0;
-    }
+    bool has(SystemId id);
 
   };
 }
