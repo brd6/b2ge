@@ -6,24 +6,19 @@
 #ifndef ENTITY_H_
 # define ENTITY_H_
 
-# include <memory>
-# include <vector>
-# include <bitset>
+#include <bitset>
+#include <memory>
+#include <vector>
 #include <algorithm>
-# include "Component.hpp"
-# include "ComponentIdHandler.hpp"
-
-# include "Config.hpp"
+#include "Component.hpp"
+#include "Config.hpp"
+#include "ClassIdHandler.hpp"
 
 namespace b2ge
 {
-  class Scene;
-
   class Entity
   {
    private:
-    Scene *mScene;
-
     friend class EntityManager;
 
     bool mIsActive;
@@ -34,9 +29,9 @@ namespace b2ge
      */
     bool mIsDestroyed;
 
-    using componentPtr = std::unique_ptr<Component>;
+    using ComponentPtr = std::unique_ptr<Component>;
 
-    std::vector<componentPtr> mComponents;
+    std::vector<ComponentPtr> mComponents;
 
     /**
      * Helper for component access
@@ -44,35 +39,35 @@ namespace b2ge
     std::bitset<COMPONENT_BITSET> mComponentBitset;
     std::array<Component *, COMPONENT_BITSET> mComponentArray;
 
-    std::size_t mId;
+    EntityId mId;
 
     std::string mName;
 
    private:
-    std::size_t getNextId();
+    EntityId getNextId();
 
     template<typename TComponent>
     void registerComponent(TComponent *component)
     {
-      mComponentArray[getComponentTypeId<TComponent>()] = component;
-      mComponentBitset[getComponentTypeId<TComponent>()] = true;
+      mComponentArray[getClassTypeId<TComponent>()] = component;
+      mComponentBitset[getClassTypeId<TComponent>()] = true;
     }
 
     template<typename TComponent>
     void unregisterComponent()
     {
-      mComponentArray[getComponentTypeId<TComponent>()] = nullptr;
-      mComponentBitset[getComponentTypeId<TComponent>()] = false;
+      mComponentArray[getClassTypeId<TComponent>()] = nullptr;
+      mComponentBitset[getClassTypeId<TComponent>()] = false;
     }
 
    public:
     Entity();
 
-    Entity(std::string const &name);
+    explicit Entity(std::string const &name);
 
     ~Entity() = default;
 
-    std::size_t getId() const;
+    EntityId getId() const;
 
     void setActive(bool isActive);
 
@@ -106,7 +101,7 @@ namespace b2ge
       if (!hasComponent<TComponent>())
 	throw std::logic_error("Access to a not entity's component");
 
-      auto component(mComponentArray[getComponentTypeId<TComponent>()]);
+      auto component(mComponentArray[getClassTypeId<TComponent>()]);
       return *static_cast<TComponent *>(component);
     }
 
@@ -116,7 +111,7 @@ namespace b2ge
       if (!hasComponent<TComponent>())
 	throw std::invalid_argument("Access to a not entity's component");
 
-      auto currComponent = mComponentArray[getComponentTypeId<TComponent>()];
+      auto currComponent = mComponentArray[getClassTypeId<TComponent>()];
 
       auto it = std::find_if(std::begin(mComponents),
 			     std::end(mComponents),
@@ -139,14 +134,12 @@ namespace b2ge
     template<typename TComponent>
     bool hasComponent() const
     {
-      return mComponentBitset[getComponentTypeId<TComponent>()];
+      return mComponentBitset[getClassTypeId<TComponent>()];
     }
 
     bool operator==(Entity const &entity) const;
 
     bool operator!=(Entity const &entity) const;
-
-    Scene &getScene() const;
 
     std::string const &getName() const;
 

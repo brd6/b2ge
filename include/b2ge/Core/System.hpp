@@ -2,29 +2,37 @@
 // Created by brd6 on 30/08/2017.
 //
 
-#include "World.hpp"
-#include "Util/NonCopyable.hpp"
-
 #ifndef B2GE_SYSTEM_HPP
 #define B2GE_SYSTEM_HPP
 
+#include "Config.hpp"
+#include "ClassIdHandler.hpp"
+
 namespace b2ge
 {
-  class System :
-	  public NonCopyable
+  class EntityManager;
+
+  class System
   {
    private:
-    World &mWorld;
+    friend class SystemManager;
+    SystemId mId{};
+
+   protected:
     EntityManager &mEntityManager;
 
    public:
-    System(World &world, EntityManager &entityManager) : mWorld(world), mEntityManager(entityManager)
-    {};
+    explicit System(EntityManager &entityManager) :
+	    mEntityManager(entityManager)
+    {
+
+    }
 
     virtual ~System() = default;
 
-    virtual void initialize()
-    {};
+    virtual void initialize() {}
+
+    SystemId getId() const { return mId; }
   };
 }
 

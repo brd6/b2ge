@@ -5,10 +5,8 @@
 #ifndef _ENTITYMANAGER_H_
 #define _ENTITYMANAGER_H_
 
-#include <unordered_map>
 #include <memory>
-#include <string>
-
+#include <unordered_map>
 #include "Core/Entity.hpp"
 
 namespace b2ge
@@ -18,11 +16,11 @@ namespace b2ge
   class EntityManager
   {
    private:
-    Scene *mScene;
+//    World &mWorld;
 
     using entityPtr = std::unique_ptr<Entity>;
 
-    std::unordered_map<std::size_t, entityPtr> mEntities;
+    std::unordered_map<EntityId, entityPtr> mEntities;
 
    public:
     EntityManager() = default;
@@ -44,10 +42,6 @@ namespace b2ge
     Entity &createEntity(std::string const &name);
 
     void removeEntitiesDestroyed();
-
-    void setScene(Scene *scene);
-
-    Scene &getScene();
 
   };
 }

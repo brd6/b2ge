@@ -5,13 +5,12 @@
 #ifndef B2GE_WORLD_HPP
 #define B2GE_WORLD_HPP
 
-#include <Manager/EntityManager.hpp>
-#include <Manager/SystemManager.hpp>
+#include "Manager/EntityManager.hpp"
+#include "Manager/SystemManager.hpp"
 
 namespace b2ge
 {
-  class World :
-	  public NonCopyable
+  class World
   {
    protected:
     std::unique_ptr<EntityManager> mEntityManager;

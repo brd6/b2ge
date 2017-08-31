@@ -5,19 +5,19 @@
 #ifndef _COMPONENT_H_
 # define _COMPONENT_H_
 
-# include "Util/NonCopyable.hpp"
-
 namespace b2ge
 {
   class Entity;
 
   class Component
   {
-   public:
+   private:
+    friend class Entity;
+
     Entity *entity;
 
    public:
-    Component() = default;
+    Component() : entity(nullptr) { };
 
     virtual ~Component() = default;
   };

@@ -2,8 +2,7 @@
 // Created by brd6 on 29/08/17.
 //
 
-#include "Core/Config.hpp"
-#include <Core/Entity.hpp>
+#include "Core/Entity.hpp"
 
 namespace b2ge
 {
@@ -56,17 +55,12 @@ namespace b2ge
 
   bool Entity::operator==(Entity const &entity) const
   {
-    return entity.getId() == this->getId() && entity.mScene == this->mScene;
+    return entity.getId() == this->getId();
   }
 
   bool Entity::operator!=(Entity const &entity) const
   {
     return !operator==(entity);
-  }
-
-  Scene &Entity::getScene() const
-  {
-    return *mScene;
   }
 
   std::string const &Entity::getName() const
@@ -79,7 +73,7 @@ namespace b2ge
     mComponents.erase(std::begin(mComponents), std::end(mComponents));
     mComponents.clear();
 
-    mComponentArray.fill(0);
+    mComponentArray.fill(nullptr);
     mComponentBitset.reset();
   }
 }

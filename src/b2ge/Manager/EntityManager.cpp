@@ -2,18 +2,14 @@
 // Created by brd6 on 30/08/17.
 //
 
-#include <stdexcept>
 #include <algorithm>
-#include <iostream>
-#include <Manager/EntityManager.hpp>
-
-#include "Core/Entity.hpp"
+#include "Manager/EntityManager.hpp"
 
 namespace b2ge
 {
   void EntityManager::add(Entity *entity)
   {
-    entity->mScene = mScene;
+//    entity->mScene = mScene;
 
     std::unique_ptr<Entity> entityPtr{entity};
 
@@ -54,16 +50,6 @@ namespace b2ge
 			 }),
 	    std::end(mEntities)
     );
-  }
-
-  void EntityManager::setScene(Scene *scene)
-  {
-    mScene = scene;
-  }
-
-  Scene &EntityManager::getScene()
-  {
-    return *mScene;
   }
 
   Entity &EntityManager::get(std::size_t id)
