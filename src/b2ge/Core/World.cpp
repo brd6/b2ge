@@ -25,7 +25,8 @@ namespace b2ge
 
   void World::update(float deltaTime)
   {
-
+    if (mEntityManager != nullptr)
+      mEntityManager.get()->update();
   }
 
   void World::setEntityManager(EntityManager *entityManager)

@@ -14,7 +14,17 @@ class SpriteRenderSystem :
  public:
   SpriteRenderSystem()
   {
-    addComponentRequired<Sprite>();
+    addComponentRequired<Sprite, Player, Vector2D>();
+  }
+};
+
+class CollisionSystem :
+	public b2ge::System
+{
+ public:
+  CollisionSystem()
+  {
+    addComponentRequired<Sprite, Player>();
   }
 };
 

@@ -26,12 +26,12 @@ namespace b2ge
     return *((it->second).get());
   }
 
-  Entity &EntityManager::createEntity()
+  Entity &EntityManager::create()
   {
-    return createEntity("");
+    return create("");
   }
 
-  Entity &EntityManager::createEntity(std::string const &name = "")
+  Entity &EntityManager::create(std::string const &name = "")
   {
     auto *entity = new Entity(name);
 
@@ -55,4 +55,55 @@ namespace b2ge
   {
     return *(mEntities[id].get());
   }
+
+  const Entities &EntityManager::getActivated() const
+  {
+    return mEntitiesActivated;
+  }
+
+  const Entities &EntityManager::getDeactivated() const
+  {
+    return mEntitiesDeactivated;
+  }
+
+  const Entities &EntityManager::getDestroyed() const
+  {
+    return mEntitiesDestroyed;
+  }
+
+  const Entities &EntityManager::getByComponentFilterGroupId(ComponentFilterGroupId id) const
+  {
+    return mEntitiesFiltered.at(id);
+  }
+
+  void EntityManager::update()
+  {
+    mEntitiesActivated.clear();
+    mEntitiesDestroyed.clear();
+    mEntitiesDeactivated.clear();
+
+    for (auto &it : mEntities)
+      {
+	auto entity = it.second.get();
+
+	if (entity->isDestroyed())
+	  {
+
+	  }
+      }
+
+    for (auto &it : mEntitiesFiltered)
+      {
+	std::remove_if(std::begin(it.second), std::end(it.second), [](auto &entity) {
+	  return (entity.isDestroyed() || !entity.isActive());
+	});
+
+	for (auto &entityActivated : mEntitiesActivated)
+	  {
+	    if (it.first & entityActivated.getId())
+	      it.second.push_back(entityActivated);
+	  }
+      }
+  }
+
 }

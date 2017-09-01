@@ -7,11 +7,15 @@
 
 #include <memory>
 #include <unordered_map>
+#include "Core/System.hpp"
 #include "Core/Entity.hpp"
 
 namespace b2ge
 {
   class Scene;
+
+  using Entities = std::vector<Entity>;
+  using entityPtr = std::unique_ptr<Entity>;
 
   class EntityManager
   {
@@ -20,9 +24,15 @@ namespace b2ge
 
     World *mWorld{nullptr};
 
-    using entityPtr = std::unique_ptr<Entity>;
-
     std::unordered_map<EntityId, entityPtr> mEntities;
+
+    Entities mEntitiesActivated;
+
+    Entities mEntitiesDeactivated;
+
+    Entities mEntitiesDestroyed;
+
+    std::unordered_map<ComponentFilterGroupId, Entities> mEntitiesFiltered;
 
    public:
     EntityManager() = default;
@@ -39,13 +49,22 @@ namespace b2ge
 
     Entity &get(std::string const &name);
 
-    Entity &createEntity();
+    Entities const &getActivated() const;
 
-    Entity &createEntity(std::string const &name);
+    Entities const &getDeactivated() const;
+
+    Entities const &getDestroyed() const;
+
+    Entities const &getByComponentFilterGroupId(ComponentFilterGroupId id) const;
+
+    Entity &create();
+
+    Entity &create(std::string const &name);
 
    private:
     void removeEntitiesDestroyed();
 
+    void update();
   };
 }
 

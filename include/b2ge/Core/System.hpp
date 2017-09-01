@@ -5,13 +5,18 @@
 #ifndef B2GE_SYSTEM_HPP
 #define B2GE_SYSTEM_HPP
 
+#include <bitset>
 #include "Config.hpp"
 #include "ClassIdHandler.hpp"
+#include "Entity.hpp"
 
 namespace b2ge
 {
   class EntityManager;
   class World;
+
+  using ComponentFilterGroupId = unsigned long;
+  using Entities = std::vector<Entity>;
 
   class System
   {
@@ -52,10 +57,13 @@ namespace b2ge
 
     SystemId getId() const { return mId; }
 
-    std::bitset<COMPONENT_BITSET> const &getComponentRequiredBitset() const
+    ComponentFilterGroupId getComponentFilterGroupId() const
     {
-      return mComponentRequiredBitset;
+      return mComponentRequiredBitset.to_ulong();
     }
+
+    Entities const &getEntities() const;
+
   };
 }
 

@@ -7,18 +7,18 @@
 #include "Core/Entity.hpp"
 #include "Components.hpp"
 
-TEST(TestEntities, CreateEntity)
+TEST(TestEntities, create)
 {
   auto entity = new b2ge::Entity();
 
   EXPECT_EQ(entity->isActive() && !entity->isDestroyed(), true);
 }
 
-TEST(TestEntities, CreateEntityWithEntityManager)
+TEST(TestEntities, createWithEntityManager)
 {
   b2ge::EntityManager em;
 
-  auto &entity = em.createEntity();
+  auto &entity = em.create();
 
   EXPECT_EQ(entity.isActive() && !entity.isDestroyed(), true);
 }
@@ -27,7 +27,7 @@ TEST(TestEntities, GetEntityByIdFromEntityManager)
 {
   b2ge::EntityManager em;
 
-  auto &entity = em.createEntity();
+  auto &entity = em.create();
 
   // retrieve the entity ID
   auto entityId = entity.getId();
@@ -44,7 +44,7 @@ TEST(TestEntities, GetEntityByNameFromEntityManager)
   std::string entityName{"myEntity"};
 
   // entity reference is not keeped immediately
-  em.createEntity(entityName);
+  em.create(entityName);
 
   auto &entity = em.get(entityName);
 
@@ -151,14 +151,14 @@ TEST(TestEntities, AddEntityToEntityManager2)
 {
   b2ge::EntityManager em;
 
-  EXPECT_NO_THROW(em.createEntity());
+  EXPECT_NO_THROW(em.create());
 }
 
 TEST(TestEntities, AddEntityWithComponentsToEntityManager)
 {
   b2ge::EntityManager em;
 
-  auto &entity = em.createEntity();
+  auto &entity = em.create();
 
   EXPECT_NO_THROW(entity.addComponent<Vector2D>());
   EXPECT_NO_THROW(entity.addComponent<Sprite>());
@@ -168,12 +168,12 @@ TEST(TestEntities, MultipleAddEntityToEntityManager)
 {
   b2ge::EntityManager em;
 
-  EXPECT_NO_THROW(em.createEntity());
-  EXPECT_NO_THROW(em.createEntity());
-  EXPECT_NO_THROW(em.createEntity());
-  EXPECT_NO_THROW(em.createEntity());
-  EXPECT_NO_THROW(em.createEntity());
-  EXPECT_NO_THROW(em.createEntity());
+  EXPECT_NO_THROW(em.create());
+  EXPECT_NO_THROW(em.create());
+  EXPECT_NO_THROW(em.create());
+  EXPECT_NO_THROW(em.create());
+  EXPECT_NO_THROW(em.create());
+  EXPECT_NO_THROW(em.create());
 }
 
 TEST(TestEntities, MultipleAddEntityToEntityManager2)

@@ -11,7 +11,6 @@
 #include <vector>
 #include <algorithm>
 #include "Component.hpp"
-#include "Config.hpp"
 #include "ClassIdHandler.hpp"
 
 namespace b2ge
