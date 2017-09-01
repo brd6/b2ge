@@ -7,7 +7,7 @@
 
 namespace b2ge
 {
-  Entities const &System::getEntities() const
+  EntitiesMap const &System::getEntities() const
   {
     if (mWorld == nullptr)
       throw std::runtime_error("World must be initialise before");

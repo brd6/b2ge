@@ -14,25 +14,25 @@ namespace b2ge
 {
   class Scene;
 
-  using Entities = std::vector<Entity>;
-  using entityPtr = std::unique_ptr<Entity>;
+  using EntitiesMap = std::unordered_map<EntityId, std::shared_ptr<Entity>>;
 
   class EntityManager
   {
    private:
     friend class World;
+    friend class Entity;
 
     World *mWorld{nullptr};
 
-    std::unordered_map<EntityId, entityPtr> mEntities;
+    EntitiesMap mEntitiesActivated;
 
-    Entities mEntitiesActivated;
+    EntitiesMap mEntitiesDeactivated;
 
-    Entities mEntitiesDeactivated;
+    EntitiesMap mEntitiesDestroyed;
 
-    Entities mEntitiesDestroyed;
+    std::unordered_map<ComponentFilterGroupId, EntitiesMap> mEntitiesFiltered;
 
-    std::unordered_map<ComponentFilterGroupId, Entities> mEntitiesFiltered;
+    std::vector<EntityId> mEntitiesIdStateChanged;
 
    public:
     EntityManager() = default;
@@ -43,25 +43,25 @@ namespace b2ge
 
     EntityManager &operator=(EntityManager const &) = delete;
 
-    void add(Entity *entity);
-
     Entity &get(std::size_t id);
 
     Entity &get(std::string const &name);
 
-    Entities const &getActivated() const;
+    EntitiesMap const &getActivated() const;
 
-    Entities const &getDeactivated() const;
+    EntitiesMap const &getDeactivated() const;
 
-    Entities const &getDestroyed() const;
+    EntitiesMap const &getDestroyed() const;
 
-    Entities const &getByComponentFilterGroupId(ComponentFilterGroupId id) const;
+    EntitiesMap const &getByComponentFilterGroupId(ComponentFilterGroupId id) const;
 
     Entity &create();
 
     Entity &create(std::string const &name);
 
    private:
+    void onEntityStateChanged(Entity const &entity);
+
     void removeEntitiesDestroyed();
 
     void update();

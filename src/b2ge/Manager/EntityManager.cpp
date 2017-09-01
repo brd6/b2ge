@@ -7,23 +7,20 @@
 
 namespace b2ge
 {
-  void EntityManager::add(Entity *entity)
+  Entity &EntityManager::get(EntityId id)
   {
-    entity->mWorld = mWorld;
-    std::unique_ptr<Entity> entityPtr{entity};
-
-    mEntities[entity->getId()] = std::move(entityPtr);
+    return *(mEntitiesActivated[id]);
   }
 
   Entity &EntityManager::get(std::string const &name)
   {
-    auto it = std::find_if(std::begin(mEntities), std::end(mEntities),
+    auto it = std::find_if(std::begin(mEntitiesActivated), std::end(mEntitiesActivated),
 			   [name](auto &entity) {
 			     return (entity.second->getName() == name);
 			   });
-    if (it == std::end(mEntities))
+    if (it == std::end(mEntitiesActivated))
       throw std::logic_error("Entity '" + name + "' not found.");
-    return *((it->second).get());
+    return *(it->second);
   }
 
   Entity &EntityManager::create()
@@ -33,77 +30,95 @@ namespace b2ge
 
   Entity &EntityManager::create(std::string const &name = "")
   {
-    auto *entity = new Entity(name);
+    auto entity = std::make_shared<Entity>(name);
 
-    add(entity);
+    mEntitiesActivated.emplace(entity->getId(), entity);
+
+    entity->mWorld = mWorld;
+
+    onEntityStateChanged(*entity);
 
     return *entity;
   }
 
   void EntityManager::removeEntitiesDestroyed()
   {
-    mEntities.erase(
-	    std::find_if(std::begin(mEntities), std::end(mEntities),
-			 [](auto &entity) {
-			   return (entity.second->isDestroyed());
-			 }),
-	    std::end(mEntities)
-    );
+//    mEntities.erase(
+//	    std::find_if(std::begin(mEntities), std::end(mEntities),
+//			 [](auto &entity) {
+//			   return (entity.second->isDestroyed());
+//			 }),
+//	    std::end(mEntities)
+//    );
   }
 
-  Entity &EntityManager::get(std::size_t id)
-  {
-    return *(mEntities[id].get());
-  }
-
-  const Entities &EntityManager::getActivated() const
+  const EntitiesMap &EntityManager::getActivated() const
   {
     return mEntitiesActivated;
   }
 
-  const Entities &EntityManager::getDeactivated() const
+  const EntitiesMap &EntityManager::getDeactivated() const
   {
     return mEntitiesDeactivated;
   }
 
-  const Entities &EntityManager::getDestroyed() const
+  const EntitiesMap &EntityManager::getDestroyed() const
   {
     return mEntitiesDestroyed;
   }
 
-  const Entities &EntityManager::getByComponentFilterGroupId(ComponentFilterGroupId id) const
+  const EntitiesMap &EntityManager::getByComponentFilterGroupId(ComponentFilterGroupId id) const
   {
     return mEntitiesFiltered.at(id);
   }
 
   void EntityManager::update()
   {
-    mEntitiesActivated.clear();
-    mEntitiesDestroyed.clear();
-    mEntitiesDeactivated.clear();
-
-    for (auto &it : mEntities)
+    for(auto &entityId : mEntitiesIdStateChanged)
       {
-	auto entity = it.second.get();
-
-	if (entity->isDestroyed())
+	// mEntitiesActivated
+	if (mEntitiesActivated.count(entityId) == 1 &&
+	    !mEntitiesActivated[entityId]->isActive())
 	  {
+	    if (mEntitiesActivated[entityId]->isDestroyed())
+	      mEntitiesDestroyed[entityId] = mEntitiesActivated[entityId];
+	    else
+	      mEntitiesDeactivated[entityId] = mEntitiesActivated[entityId];
 
+	    mEntitiesActivated.erase(entityId);
 	  }
       }
+//    mEntitiesActivated.clear();
+//    mEntitiesDestroyed.clear();
+//    mEntitiesDeactivated.clear();
+//
+//    for (auto &it : mEntities)
+//      {
+//	auto entity = it.second.get();
+//
+//	if (entity->isDestroyed())
+//	  {
+//
+//	  }
+//      }
+//
+//    for (auto &it : mEntitiesFiltered)
+//      {
+//	std::remove_if(std::begin(it.second), std::end(it.second), [](auto &entity) {
+//	  return (entity.isDestroyed() || !entity.isActive());
+//	});
+//
+//	for (auto &entityActivated : mEntitiesActivated)
+//	  {
+//	    if (it.first & entityActivated.getId())
+//	      it.second.push_back(entityActivated);
+//	  }
+//      }
+  }
 
-    for (auto &it : mEntitiesFiltered)
-      {
-	std::remove_if(std::begin(it.second), std::end(it.second), [](auto &entity) {
-	  return (entity.isDestroyed() || !entity.isActive());
-	});
-
-	for (auto &entityActivated : mEntitiesActivated)
-	  {
-	    if (it.first & entityActivated.getId())
-	      it.second.push_back(entityActivated);
-	  }
-      }
+  void EntityManager::onEntityStateChanged(Entity const &entity)
+  {
+    mEntitiesIdStateChanged.push_back(entity.getId());
   }
 
 }

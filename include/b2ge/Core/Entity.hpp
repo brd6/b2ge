@@ -47,7 +47,7 @@ namespace b2ge
     std::string mName;
 
    private:
-    EntityId getNextId();
+    static EntityId getNextId();
 
     template<typename TComponent>
     void registerComponent(TComponent *component)
@@ -65,7 +65,6 @@ namespace b2ge
 
    public:
     Entity();
-
     explicit Entity(std::string const &name);
 
     ~Entity() = default;

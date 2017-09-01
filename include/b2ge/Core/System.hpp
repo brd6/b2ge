@@ -6,6 +6,7 @@
 #define B2GE_SYSTEM_HPP
 
 #include <bitset>
+#include <unordered_map>
 #include "Config.hpp"
 #include "ClassIdHandler.hpp"
 #include "Entity.hpp"
@@ -16,7 +17,7 @@ namespace b2ge
   class World;
 
   using ComponentFilterGroupId = unsigned long;
-  using Entities = std::vector<Entity>;
+  using EntitiesMap = std::unordered_map<EntityId, std::shared_ptr<Entity>>;
 
   class System
   {
@@ -27,7 +28,7 @@ namespace b2ge
 
     World *mWorld{nullptr};
 
-    std::bitset<COMPONENT_BITSET> mComponentRequiredBitset;
+    std::bitset<COMPONENT_BITSET> mComponentRequiredBitset{};
 
 //   protected:
 //    EntityManager &mEntityManager;
@@ -62,7 +63,7 @@ namespace b2ge
       return mComponentRequiredBitset.to_ulong();
     }
 
-    Entities const &getEntities() const;
+    EntitiesMap const &getEntities() const;
 
   };
 }

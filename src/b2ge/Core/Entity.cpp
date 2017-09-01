@@ -2,34 +2,37 @@
 // Created by brd6 on 29/08/17.
 //
 
+#include "Core/World.hpp"
 #include "Core/Entity.hpp"
 
 namespace b2ge
 {
-  std::size_t b2ge::Entity::getNextId()
+  EntityId b2ge::Entity::getNextId()
   {
-    static std::size_t mNextId;
+    static EntityId mNextId;
 
     return ++mNextId;
   }
 
   Entity::Entity() :
-	  Entity("")
+  	Entity("")
   {
 
   }
 
-  Entity::Entity(std::string const &name) :
+  Entity::Entity(std::string const &name = "") :
 	  mIsActive(true),
 	  mIsDestroyed(false),
 	  mId(getNextId()),
 	  mName(name)
   {
-
   }
 
   void Entity::setActive(bool isActive)
   {
+    if (mWorld != nullptr && mIsActive != isActive)
+      mWorld->getEntityManager().onEntityStateChanged(*this);
+
     mIsActive = isActive;
   }
 
@@ -40,6 +43,9 @@ namespace b2ge
 
   void Entity::destroy()
   {
+    if (mWorld != nullptr && !mIsDestroyed)
+      mWorld->getEntityManager().onEntityStateChanged(*this);
+
     mIsDestroyed = true;
   }
 
@@ -48,7 +54,7 @@ namespace b2ge
     return mIsDestroyed;
   }
 
-  std::size_t Entity::getId() const
+  EntityId Entity::getId() const
   {
     return mId;
   }

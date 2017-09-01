@@ -142,15 +142,6 @@ TEST(TestEntities, AddEntityToEntityManager)
 {
   b2ge::EntityManager em;
 
-  auto entity = new b2ge::Entity();
-
-  EXPECT_NO_THROW(em.add(entity));
-}
-
-TEST(TestEntities, AddEntityToEntityManager2)
-{
-  b2ge::EntityManager em;
-
   EXPECT_NO_THROW(em.create());
 }
 
@@ -176,25 +167,13 @@ TEST(TestEntities, MultipleAddEntityToEntityManager)
   EXPECT_NO_THROW(em.create());
 }
 
-TEST(TestEntities, MultipleAddEntityToEntityManager2)
-{
-  b2ge::EntityManager em;
-
-  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
-  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
-  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
-  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
-  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
-  EXPECT_NO_THROW(em.add(new b2ge::Entity()));
-}
-
 TEST(TestEntities, MultipleAddAndGetEntityToEntityManager)
 {
   b2ge::EntityManager em;
 
-  em.add(new b2ge::Entity("myEntity1"));
-  em.add(new b2ge::Entity("myEntity2"));
-  em.add(new b2ge::Entity("myEntity3"));
+  em.create("myEntity1");
+  em.create("myEntity2");
+  em.create("myEntity3");
 
   EXPECT_EQ(em.get("myEntity1").getName(), "myEntity1");
   EXPECT_EQ(em.get("myEntity2").getName(), "myEntity2");
