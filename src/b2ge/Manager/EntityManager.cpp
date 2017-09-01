@@ -41,17 +41,6 @@ namespace b2ge
     return *entity;
   }
 
-  void EntityManager::removeEntitiesDestroyed()
-  {
-//    mEntities.erase(
-//	    std::find_if(std::begin(mEntities), std::end(mEntities),
-//			 [](auto &entity) {
-//			   return (entity.second->isDestroyed());
-//			 }),
-//	    std::end(mEntities)
-//    );
-  }
-
   const EntitiesMap &EntityManager::getActivated() const
   {
     return mEntitiesActivated;
@@ -76,49 +65,82 @@ namespace b2ge
   {
     for(auto &entityId : mEntitiesIdStateChanged)
       {
-	// mEntitiesActivated
-	if (mEntitiesActivated.count(entityId) == 1 &&
-	    !mEntitiesActivated[entityId]->isActive())
-	  {
-	    if (mEntitiesActivated[entityId]->isDestroyed())
-	      mEntitiesDestroyed[entityId] = mEntitiesActivated[entityId];
-	    else
-	      mEntitiesDeactivated[entityId] = mEntitiesActivated[entityId];
+	auto entity = getCorrectEntityForUpdate(entityId);
 
-	    mEntitiesActivated.erase(entityId);
-	  }
+	if (entity == nullptr)
+	  continue;
+
+	applyEntityUpdate(entity);
+	applyEntityFilteredUpdate(entity);
       }
-//    mEntitiesActivated.clear();
-//    mEntitiesDestroyed.clear();
-//    mEntitiesDeactivated.clear();
-//
-//    for (auto &it : mEntities)
-//      {
-//	auto entity = it.second.get();
-//
-//	if (entity->isDestroyed())
-//	  {
-//
-//	  }
-//      }
-//
-//    for (auto &it : mEntitiesFiltered)
-//      {
-//	std::remove_if(std::begin(it.second), std::end(it.second), [](auto &entity) {
-//	  return (entity.isDestroyed() || !entity.isActive());
-//	});
-//
-//	for (auto &entityActivated : mEntitiesActivated)
-//	  {
-//	    if (it.first & entityActivated.getId())
-//	      it.second.push_back(entityActivated);
-//	  }
-//      }
+    removeEntitiesDestroyed();
   }
 
   void EntityManager::onEntityStateChanged(Entity const &entity)
   {
     mEntitiesIdStateChanged.push_back(entity.getId());
+  }
+
+  std::vector<ComponentFilterGroupId> const EntityManager::getEntityComponentFilterGroupIds(const Entity &entity) const
+  {
+    std::vector<ComponentFilterGroupId> componentFilterGroupIds;
+
+    for (auto &it : mEntitiesFiltered)
+      {
+	if (entity.getId() & it.first)
+	  componentFilterGroupIds.push_back(it.first);
+      }
+
+    return componentFilterGroupIds;
+  }
+
+  std::shared_ptr<Entity> EntityManager::getCorrectEntityForUpdate(EntityId entityId)
+  {
+    decltype(mEntitiesActivated.begin()->second) entity = nullptr;
+
+    if (mEntitiesActivated.count(entityId) == 1)
+      {
+	entity = mEntitiesActivated[entityId];
+
+	mEntitiesActivated.erase(entityId);
+      }
+    else if (mEntitiesDeactivated.count(entityId) == 1)
+      {
+	entity = mEntitiesDeactivated[entityId];
+
+	mEntitiesDeactivated.erase(entityId);
+      }
+
+    return entity;
+  }
+
+  void EntityManager::applyEntityUpdate(std::shared_ptr<Entity> &entity)
+  {
+    if (!entity->isActive() && entity->isDestroyed())
+      mEntitiesDestroyed[entity->getId()] = entity;
+    else if (!entity->isActive())
+      mEntitiesDeactivated[entity->getId()] = entity;
+    else
+      mEntitiesActivated[entity->getId()] = entity;
+  }
+
+  void EntityManager::applyEntityFilteredUpdate(std::shared_ptr<Entity> &entity)
+  {
+    auto entityComponentFilterGroupId = getEntityComponentFilterGroupIds(*entity);
+
+    for (auto componentFilterGroupId : entityComponentFilterGroupId)
+      {
+	if (entity->isActive() &&
+	    mEntitiesFiltered[componentFilterGroupId].count(entity->getId()))
+	  mEntitiesFiltered[componentFilterGroupId][entity->getId()] = entity;
+	else
+	  mEntitiesFiltered[componentFilterGroupId].erase(entity->getId());
+      }
+  }
+
+  void EntityManager::removeEntitiesDestroyed()
+  {
+    mEntitiesDestroyed.clear();
   }
 
 }

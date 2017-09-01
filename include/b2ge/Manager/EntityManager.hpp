@@ -62,9 +62,17 @@ namespace b2ge
    private:
     void onEntityStateChanged(Entity const &entity);
 
-    void removeEntitiesDestroyed();
-
     void update();
+
+    std::shared_ptr<Entity> getCorrectEntityForUpdate(EntityId entityId);
+
+    void applyEntityUpdate(std::shared_ptr<Entity> &entity);
+
+    void applyEntityFilteredUpdate(std::shared_ptr<Entity> &entity);
+
+    std::vector<ComponentFilterGroupId> const getEntityComponentFilterGroupIds(Entity const &entity) const;
+
+    void removeEntitiesDestroyed();
   };
 }
 
