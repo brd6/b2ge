@@ -49,13 +49,6 @@ namespace b2ge
       mComponentRequiredBitset[componentId] = true;
     }
 
-   public:
-    System() = default;
-
-    virtual ~System() = default;
-
-    virtual void initialize() {}
-
     SystemId getId() const { return mId; }
 
     ComponentFilterGroupId getComponentFilterGroupId() const
@@ -64,6 +57,13 @@ namespace b2ge
     }
 
     EntitiesMap const &getEntities() const;
+
+    virtual void initialize() {}
+
+   public:
+    System() = default;
+
+    virtual ~System() = default;
 
   };
 }

@@ -6,7 +6,7 @@
 #include "gtest/gtest.h"
 #include "Systems.hpp"
 
-TEST(TestSystem, InvalidEntityManagerAccess)
+TEST(TestSystem, ValidGetSystemEntities)
 {
   b2ge::World world;
   SpriteRenderSystem spriteRenderSystem;
@@ -14,7 +14,5 @@ TEST(TestSystem, InvalidEntityManagerAccess)
 
   //spriteRenderSystem.getId()
 
-  std::cout << spriteRenderSystem.getComponentFilterGroupId() << std::endl;
-  std::cout << collisionSystem.getComponentFilterGroupId() << std::endl;
 //  EXPECT_THROW(world.getEntityManager(), std::runtime_error);
 }
