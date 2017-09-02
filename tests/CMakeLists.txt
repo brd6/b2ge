@@ -9,7 +9,7 @@ set(GTEST_LIB_DIR ../external/googletest)
 add_subdirectory(${GTEST_LIB_DIR} ../external/)
 
 include_directories(${GTEST_LIB_DIR}/googletest/include)
-include_directories(${GTEST_LIB_DIR}/googlemock/include)
+#include_directories(${GTEST_LIB_DIR}/googlemock/include)
 
 include_directories(../include/b2ge)
 
@@ -19,5 +19,5 @@ file(GLOB TEST_SOURCE_FILES *.cpp)
 add_executable(${PROJECT_NAME} ${TEST_SOURCE_FILES})
 
 target_link_libraries(${PROJECT_NAME} gtest gtest_main)
-target_link_libraries(${PROJECT_NAME} gmock gmock_main)
+#target_link_libraries(${PROJECT_NAME} gmock gmock_main)
 target_link_libraries(${PROJECT_NAME} b2ge)

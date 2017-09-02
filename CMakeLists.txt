@@ -7,6 +7,7 @@ cmake_minimum_required(VERSION 3.0)
 project(b2ge)
 
 set(CMAKE_CXX_STANDARD 14)
+set(ENABLE_BUILD_TESTS false)
 
 # cmake -DCMAKE_INSTALL_PREFIX=/usr . && make all install
 
