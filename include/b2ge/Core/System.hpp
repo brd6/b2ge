@@ -21,14 +21,14 @@ namespace b2ge
 
   class System
   {
-   private:
+   protected:
     friend class SystemManager;
 
-    SystemId mId{};
+    SystemId mId;
 
-    World *mWorld{nullptr};
+    World *mWorld;
 
-    std::bitset<COMPONENT_BITSET> mComponentRequiredBitset{};
+    std::bitset<COMPONENT_BITSET> mComponentRequiredBitset;
 
 //   protected:
 //    EntityManager &mEntityManager;
@@ -49,19 +49,16 @@ namespace b2ge
       mComponentRequiredBitset[componentId] = true;
     }
 
-    SystemId getId() const { return mId; }
+    SystemId getId() const;
 
-    ComponentFilterGroupId getComponentFilterGroupId() const
-    {
-      return mComponentRequiredBitset.to_ulong();
-    }
+    ComponentFilterGroupId getComponentFilterGroupId() const;
 
     EntitiesMap const &getEntities() const;
 
     virtual void initialize() {}
 
    public:
-    System() = default;
+    System();
 
     virtual ~System() = default;
 

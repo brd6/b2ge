@@ -2,6 +2,7 @@
 // Created by brd6 on 31/08/2017.
 //
 
+#include <iostream>
 #include "Core/System.hpp"
 #include "Core/World.hpp"
 
@@ -15,5 +16,23 @@ namespace b2ge
     ComponentFilterGroupId groupId = getComponentFilterGroupId();
 
     return mWorld->getEntityManager().getByComponentFilterGroupId(groupId);
+  }
+
+  SystemId System::getId() const
+  {
+    return mId;
+  }
+
+  ComponentFilterGroupId System::getComponentFilterGroupId() const
+  {
+    return mComponentRequiredBitset.to_ulong();
+  }
+
+  System::System() :
+  	mWorld(nullptr),
+	mId(0),
+	mComponentRequiredBitset(0)
+  {
+
   }
 }

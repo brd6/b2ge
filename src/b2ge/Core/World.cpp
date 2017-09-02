@@ -7,39 +7,24 @@
 
 namespace b2ge
 {
-  EntityManager &World::getEntityManager() const
+  EntityManager &World::getEntityManager()
   {
-    if (mEntityManager == nullptr)
-      throw std::runtime_error("entityManager must be initialise before");
-
-    return *(mEntityManager.get());
+    return mEntityManager;
   }
 
-  SystemManager &World::getSystemManager() const
+  SystemManager &World::getSystemManager()
   {
-    if (mSystemManager == nullptr)
-      throw std::runtime_error("systemManager must be initialise before");
-
-    return *(mSystemManager.get());
+    return mSystemManager;
   }
 
   void World::update(float deltaTime)
   {
-    if (mEntityManager != nullptr)
-      mEntityManager.get()->update();
+    mEntityManager.update();
   }
 
-  void World::setEntityManager(EntityManager *entityManager)
+  World::World()
   {
-    if (entityManager != nullptr)
-      entityManager->mWorld = this;
-    mEntityManager.reset(entityManager);
-  }
-
-  void World::setSystemManager(SystemManager *systemManager)
-  {
-    if (systemManager != nullptr)
-      systemManager->mWorld = this;
-    mSystemManager.reset(systemManager);
+    mEntityManager.mWorld = this;
+    mSystemManager.mWorld = this;
   }
 }

@@ -6,13 +6,28 @@
 #include "gtest/gtest.h"
 #include "Systems.hpp"
 
-TEST(TestSystem, ValidGetSystemEntities)
+TEST(TestSystem, InvalidUseOfSystem)
+{
+  SpriteRenderSystem spriteRenderSystem;
+
+  EXPECT_THROW(spriteRenderSystem.render(), std::runtime_error);
+}
+
+TEST(TestSystem, ValidUseOfSystem)
 {
   b2ge::World world;
-  SpriteRenderSystem spriteRenderSystem;
-  CollisionSystem collisionSystem;
 
-  //spriteRenderSystem.getId()
+  // add system to the SystemManager
+   world.getSystemManager().add<SpriteRenderSystem>();
 
-//  EXPECT_THROW(world.getEntityManager(), std::runtime_error);
+  // get the system
+   auto &spriteRenderSystem = world.getSystemManager().get<SpriteRenderSystem>();
+
+  // use it
+  EXPECT_EQ(spriteRenderSystem.itsWork(), true);
+}
+
+TEST(TestSystem, ValidUseOfSystemUpdatable)
+{
+  // In progress
 }

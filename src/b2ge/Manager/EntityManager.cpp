@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <iostream>
 #include "Manager/EntityManager.hpp"
 
 namespace b2ge
@@ -58,6 +59,9 @@ namespace b2ge
 
   const EntitiesMap &EntityManager::getByComponentFilterGroupId(ComponentFilterGroupId id) const
   {
+    if (mEntitiesFiltered.count(id) == 0)
+      throw std::logic_error("Component Filter Group Id not found");
+
     return mEntitiesFiltered.at(id);
   }
 
@@ -100,13 +104,13 @@ namespace b2ge
 
     if (mEntitiesActivated.count(entityId) == 1)
       {
-	entity = mEntitiesActivated[entityId];
+	entity = mEntitiesActivated.at(entityId);
 
 	mEntitiesActivated.erase(entityId);
       }
     else if (mEntitiesDeactivated.count(entityId) == 1)
       {
-	entity = mEntitiesDeactivated[entityId];
+	entity = mEntitiesDeactivated.at(entityId);
 
 	mEntitiesDeactivated.erase(entityId);
       }
@@ -131,7 +135,7 @@ namespace b2ge
     for (auto componentFilterGroupId : entityComponentFilterGroupId)
       {
 	if (entity->isActive() &&
-	    mEntitiesFiltered[componentFilterGroupId].count(entity->getId()))
+	    !mEntitiesFiltered[componentFilterGroupId].count(entity->getId()))
 	  mEntitiesFiltered[componentFilterGroupId][entity->getId()] = entity;
 	else
 	  mEntitiesFiltered[componentFilterGroupId].erase(entity->getId());
@@ -141,6 +145,11 @@ namespace b2ge
   void EntityManager::removeEntitiesDestroyed()
   {
     mEntitiesDestroyed.clear();
+  }
+
+  void EntityManager::registerSystemComponentFilterGroupId(ComponentFilterGroupId id)
+  {
+    mEntitiesFiltered[id] = {};
   }
 
 }

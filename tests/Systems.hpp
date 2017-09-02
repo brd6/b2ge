@@ -14,8 +14,29 @@ class SpriteRenderSystem :
  public:
   SpriteRenderSystem()
   {
-    addComponentRequired<Sprite, Player, Vector2D>();
+    addComponentRequired<Sprite>();
   }
+
+  bool itsWork()
+  {
+    return true;
+  }
+
+  void render()
+  {
+    auto &entities = getEntities();
+
+    for (auto &it : entities)
+      {
+	std::cout << "render Entity#" << it.second->getId() << std::endl;
+      }
+  }
+
+  std::size_t getEntitiesSize()
+  {
+    return getEntities().size();
+  }
+
 };
 
 class CollisionSystem :

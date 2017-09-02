@@ -13,23 +13,19 @@ namespace b2ge
   class World
   {
    protected:
-    std::unique_ptr<EntityManager> mEntityManager;
-    std::unique_ptr<SystemManager> mSystemManager;
+    EntityManager mEntityManager;
+    SystemManager mSystemManager;
 
    public:
-    World() = default;
+    World();
 
     virtual ~World() = default;
 
     void update(float deltaTime);
 
-    EntityManager &getEntityManager() const;
+    EntityManager &getEntityManager();
 
-    SystemManager &getSystemManager() const;
-
-    void setEntityManager(EntityManager *entityManager);
-
-    void setSystemManager(SystemManager *systemManager);
+    SystemManager &getSystemManager();
 
 //    void reset();
   };

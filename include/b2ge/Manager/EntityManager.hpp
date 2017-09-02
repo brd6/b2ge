@@ -21,6 +21,7 @@ namespace b2ge
    private:
     friend class World;
     friend class Entity;
+    friend class SystemManager;
 
     World *mWorld{nullptr};
 
@@ -73,6 +74,8 @@ namespace b2ge
     std::vector<ComponentFilterGroupId> const getEntityComponentFilterGroupIds(Entity const &entity) const;
 
     void removeEntitiesDestroyed();
+
+    void registerSystemComponentFilterGroupId(ComponentFilterGroupId id);
   };
 }
 

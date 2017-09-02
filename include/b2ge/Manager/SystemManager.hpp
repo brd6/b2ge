@@ -7,7 +7,9 @@
 
 #include <memory>
 #include <unordered_map>
+#include <iostream>
 #include "Core/System.hpp"
+#include "Core/SystemUpdatable.hpp"
 
 namespace b2ge
 {
@@ -16,11 +18,13 @@ namespace b2ge
   class SystemManager
   {
    private:
+    friend class World;
+
     using SystemPtr = std::unique_ptr<System>;
 
     std::unordered_map<SystemId, SystemPtr> mSystems;
 
-    friend class World;
+    std::unordered_map<SystemId, SystemUpdatable *> mSystemUpdatables;
 
     World *mWorld{nullptr};
 
@@ -41,9 +45,15 @@ namespace b2ge
 
       system->initialize();
 
+      registerSystemFilterGroupId(system);
+
       std::unique_ptr<System> systemPtr{system};
 
       mSystems[system->mId] = std::move(systemPtr);
+
+      auto systemUpdatable = dynamic_cast<SystemUpdatable *>(system);
+      if (systemUpdatable != nullptr)
+	mSystemUpdatables[system->mId] = systemUpdatable;
 
       return *system;
     }
@@ -69,6 +79,9 @@ namespace b2ge
 
       mSystems[systemId].reset();
       mSystems.erase(systemId);
+
+      if (mSystemUpdatables.count(systemId) == 1)
+	mSystemUpdatables.erase(systemId);
     }
 
     template <typename TSystem>
@@ -80,6 +93,8 @@ namespace b2ge
     }
 
     bool has(SystemId id);
+
+    void registerSystemFilterGroupId(System *system);
 
   };
 }
