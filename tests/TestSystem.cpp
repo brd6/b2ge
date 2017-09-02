@@ -29,5 +29,5 @@ TEST(TestSystem, ValidUseOfSystem)
 
 TEST(TestSystem, ValidUseOfSystemUpdatable)
 {
-  // In progress
+  // TODO
 }

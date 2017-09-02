@@ -45,3 +45,13 @@ TEST(TestWorld, SystemWithEntities)
   EXPECT_EQ(world.getEntityManager().getActivated().size(), 3);
   EXPECT_EQ(spriteRenderSystem.getEntitiesSize(), 2);
 }
+
+TEST(TestWorld, KilledEntityInWorld)
+{
+  // TODO
+}
+
+TEST(TestWorld, DisabledEntityInWorld)
+{
+  // TODO
+}
