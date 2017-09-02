@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.0)
 project(b2ge)
 
 set(CMAKE_CXX_STANDARD 14)
-set(ENABLE_BUILD_TESTS false)
+set(ENABLE_BUILD_TESTS true)
 
 # cmake -DCMAKE_INSTALL_PREFIX=/usr . && make all install
 
@@ -40,7 +40,7 @@ file(GLOB_RECURSE INCLUDE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp)
 set(SOURCE_FILES ${SOURCE_FILES} ${INCLUDE_FILES})
 
 # Lib configuration
-add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
+add_library(${PROJECT_NAME} ${SOURCE_FILES})
 
 
 # Executable
