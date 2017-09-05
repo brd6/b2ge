@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
-#include "Core/System.hpp"
-#include "Core/World.hpp"
+#include <b2ge/Core/System.hpp>
+#include <b2ge/Core/World.hpp>
 
 namespace b2ge
 {

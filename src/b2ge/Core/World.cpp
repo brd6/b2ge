@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "Core/World.hpp"
+#include <b2ge/Core/World.hpp>
 
 namespace b2ge
 {

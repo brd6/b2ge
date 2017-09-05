@@ -2,8 +2,8 @@
 // Created by brd6 on 31/08/2017.
 //
 
-#include "Manager/SystemManager.hpp"
-#include "Core/World.hpp"
+#include <b2ge/Manager/SystemManager.hpp>
+#include <b2ge/Core/World.hpp>
 
 namespace b2ge
 {

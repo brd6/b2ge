@@ -5,8 +5,8 @@
 #ifndef _SYSTEMS_H_
 #define _SYSTEMS_H_
 
+#include <b2ge/Core/System.hpp>
 #include "Components.hpp"
-#include "Core/System.hpp"
 
 class SpriteRenderSystem :
 	public b2ge::System

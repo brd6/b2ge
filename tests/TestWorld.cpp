@@ -2,9 +2,9 @@
 // Created by brd6 on 29/08/17.
 //
 
-#include "Manager/EntityManager.hpp"
-#include "Core/World.hpp"
-#include "gtest/gtest.h"
+#include <b2ge/Manager/EntityManager.hpp>
+#include <b2ge/Core/World.hpp>
+#include <gtest/gtest.h>
 #include "Components.hpp"
 #include "Systems.hpp"
 

@@ -4,7 +4,7 @@
 
 #include <algorithm>
 #include <iostream>
-#include "Manager/EntityManager.hpp"
+#include <b2ge/Manager/EntityManager.hpp>
 
 namespace b2ge
 {

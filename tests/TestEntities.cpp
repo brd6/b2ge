@@ -2,9 +2,9 @@
 // Created by brd6 on 29/08/17.
 //
 
-#include <Manager/EntityManager.hpp>
-#include "gtest/gtest.h"
-#include "Core/Entity.hpp"
+#include <b2ge/Manager/EntityManager.hpp>
+#include <gtest/gtest.h>
+#include <b2ge/Core/Entity.hpp>
 #include "Components.hpp"
 
 TEST(TestEntities, create)

@@ -29,7 +29,7 @@ endif()
 #########################################
 
 # Include directory
-set(B2GE_INCLUDE include/b2ge)
+set(B2GE_INCLUDE include)
 include_directories(${B2GE_INCLUDE})
 
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)

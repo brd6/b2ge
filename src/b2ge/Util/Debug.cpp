@@ -10,7 +10,7 @@
 
 #endif // WIN32
 
-#include "Util/Debug.hpp"
+#include <b2ge/Util/Debug.hpp>
 
 namespace b2ge
 {

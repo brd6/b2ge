@@ -11,7 +11,7 @@ add_subdirectory(${GTEST_LIB_DIR} ../external/)
 include_directories(${GTEST_LIB_DIR}/googletest/include)
 #include_directories(${GTEST_LIB_DIR}/googlemock/include)
 
-include_directories(../include/b2ge)
+include_directories(../include)
 
 file(GLOB TEST_SOURCE_FILES *.cpp)
 #set(TEST_SOURCE_FILES gtest.cpp)

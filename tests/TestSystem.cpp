@@ -2,8 +2,8 @@
 // Created by brd6 on 29/08/17.
 //
 
-#include "Core/World.hpp"
-#include "gtest/gtest.h"
+#include <b2ge/Core/World.hpp>
+#include <gtest/gtest.h>
 #include "Systems.hpp"
 
 TEST(TestSystem, InvalidUseOfSystem)
