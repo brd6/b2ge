@@ -78,6 +78,7 @@ namespace b2ge
 	applyEntityFilteredUpdate(entity);
       }
     removeEntitiesDestroyed();
+    mEntitiesIdStateChanged.clear();
   }
 
   void EntityManager::onEntityStateChanged(Entity const &entity)
@@ -91,7 +92,7 @@ namespace b2ge
 
     for (auto &it : mEntitiesFiltered)
       {
-	if (entity.getId() & it.first)
+	if (((entity.mComponentBitset.to_ulong() & it.first) == entity.mComponentBitset.to_ulong()))
 	  componentFilterGroupIds.push_back(it.first);
       }
 
@@ -136,7 +137,9 @@ namespace b2ge
       {
 	if (entity->isActive() &&
 	    !mEntitiesFiltered[componentFilterGroupId].count(entity->getId()))
+	{
 	  mEntitiesFiltered[componentFilterGroupId][entity->getId()] = entity;
+	}
 	else
 	  mEntitiesFiltered[componentFilterGroupId].erase(entity->getId());
       }
