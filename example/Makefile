@@ -6,7 +6,7 @@ CXX 		= 	g++
 
 RM		= 	rm -f
 
-NAME		=	a.out
+NAME		=	example
 
 SRCS		= 	main.cpp \
 

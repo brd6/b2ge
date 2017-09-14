@@ -20,6 +20,7 @@ namespace b2ge
   void World::update(float deltaTime)
   {
     mEntityManager.update();
+    mSystemManager.update(deltaTime);
   }
 
   World::World()

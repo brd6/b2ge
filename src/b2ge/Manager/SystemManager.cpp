@@ -18,4 +18,12 @@ namespace b2ge
 
     mWorld->getEntityManager().registerSystemComponentFilterGroupId(groupId);
   }
+
+  void SystemManager::update(float deltaTime)
+  {
+    for (auto &it : mSystemUpdatables)
+    {
+      it.second->update(deltaTime);
+    }
+  }
 }
