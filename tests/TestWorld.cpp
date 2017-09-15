@@ -46,6 +46,34 @@ TEST(TestWorld, SystemWithEntities)
   EXPECT_EQ(spriteRenderSystem.getEntitiesSize(), 2);
 }
 
+TEST(TestWorld, SystemWithEntities2)
+{
+  b2ge::World world;
+  float deltaTime = 0.5f;
+
+  auto &entity1 = world.getEntityManager().create();
+  auto &entity2 = world.getEntityManager().create();
+  auto &entity3 = world.getEntityManager().create();
+
+  entity1.addComponent<Sprite>().texturePath = "test/texture/path";
+  entity1.addComponent<Player>();
+  entity2.addComponent<Player>().name = "PlayerName";
+  entity3.addComponent<Sprite>().texturePath = "test/texture/path2";
+
+  world.getSystemManager().add<SpriteRenderSystem>();
+  world.getSystemManager().add<CollisionSystem>();
+
+  // Update the world
+  world.update(deltaTime);
+
+  world.getSystemManager().get<CollisionSystem>().check();
+
+  auto &spriteRenderSystem = world.getSystemManager().get<SpriteRenderSystem>();
+
+//  EXPECT_EQ(world.getEntityManager().getActivated().size(), 3);
+//  EXPECT_EQ(spriteRenderSystem.getEntitiesSize(), 2);
+}
+
 TEST(TestWorld, KilledEntityInWorld)
 {
   // TODO
