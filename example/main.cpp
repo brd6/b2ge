@@ -45,6 +45,7 @@ class MoveSystem : public b2ge::SystemUpdatable
       std::cout << player.name << std::endl;
     }
     isRunning = false;
+    (void)deltaTime;
   }
 };
 

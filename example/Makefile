@@ -13,9 +13,9 @@ SRCS		= 	main.cpp \
 OBJS		= 	$(SRCS:.cpp=.o)
 
 CXXFLAGS 	+= 	-std=c++14
-CXXFLAGS	+=	-I./ -L./ -lb2ge
+CXXFLAGS	+=	-I./lib
 
-#LDFLAGS 	+=
+LDFLAGS 	+= 	-L./lib -lb2ge
 
 all: CXXFLAGS+=$(RELEASE_CFLAGS)
 all: $(NAME)
