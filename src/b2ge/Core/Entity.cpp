@@ -31,9 +31,10 @@ namespace b2ge
   void Entity::setActive(bool isActive)
   {
     if (mWorld != nullptr && mIsActive != isActive)
+    {
+      mIsActive = isActive;
       mWorld->getEntityManager().onEntityStateChanged(*this);
-
-    mIsActive = isActive;
+    }
   }
 
   bool Entity::isActive() const
@@ -44,9 +45,10 @@ namespace b2ge
   void Entity::destroy()
   {
     if (mWorld != nullptr && !mIsDestroyed)
+    {
+      mIsDestroyed = true;
       mWorld->getEntityManager().onEntityStateChanged(*this);
-
-    mIsDestroyed = true;
+    }
   }
 
   bool Entity::isDestroyed() const

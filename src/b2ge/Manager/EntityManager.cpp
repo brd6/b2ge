@@ -121,7 +121,7 @@ namespace b2ge
 
   void EntityManager::applyEntityUpdate(std::shared_ptr<Entity> &entity)
   {
-    if (!entity->isActive() && entity->isDestroyed())
+    if (entity->isDestroyed())
       mEntitiesDestroyed[entity->getId()] = entity;
     else if (!entity->isActive())
       mEntitiesDeactivated[entity->getId()] = entity;
@@ -147,6 +147,7 @@ namespace b2ge
 
   void EntityManager::removeEntitiesDestroyed()
   {
+    mEntitiesDestroyed.erase(std::begin(mEntitiesDestroyed), std::end(mEntitiesDestroyed));
     mEntitiesDestroyed.clear();
   }
 

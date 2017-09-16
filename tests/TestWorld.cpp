@@ -111,7 +111,22 @@ TEST(TestWorld, SystemWithEntitiesNotWorldUpdate)
 
 TEST(TestWorld, KilledEntityInWorld)
 {
-  // TODO
+  b2ge::World world;
+  float deltaTime = 0.5f;
+
+  auto &entity1 = world.getEntityManager().create("entity1");
+  auto &entity2 = world.getEntityManager().create("entity2");
+
+  EXPECT_EQ(world.getEntityManager().getActivated().size(), 2);
+
+  std::cout << std::endl;
+  entity1.destroy();
+
+  EXPECT_EQ(entity1.isDestroyed(), true);
+
+  world.update(deltaTime);
+
+  EXPECT_EQ(world.getEntityManager().getActivated().size(), 1);
 }
 
 TEST(TestWorld, DisabledEntityInWorld)
