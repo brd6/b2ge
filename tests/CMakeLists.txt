@@ -1,17 +1,19 @@
 # base configuration
 cmake_minimum_required(VERSION 3.0)
-project(b2geTest)
+project(b2getest)
 
-set(GTEST_LIB_DIR ../external/googletest)
+set(GTEST_LIB_DIR external/googletest)
 #set(GTEST_LIB_DIR ../external/googletest/googletest CACHE STRING "Google Test source root")
 
-
-add_subdirectory(${GTEST_LIB_DIR} ../external/)
+add_subdirectory(${GTEST_LIB_DIR})
 
 include_directories(${GTEST_LIB_DIR}/googletest/include)
 #include_directories(${GTEST_LIB_DIR}/googlemock/include)
 
-include_directories(../include)
+include_directories(${CMAKE_SOURCE_DIR}/include)
+#include_directories(${CMAKE_SOURCE_DIR}/src/b2ge/Core)
+#include_directories(${CMAKE_SOURCE_DIR}/src/b2ge/Manager)
+#include_directories(${CMAKE_SOURCE_DIR}/src/b2ge/Util)
 
 file(GLOB TEST_SOURCE_FILES *.cpp)
 #set(TEST_SOURCE_FILES gtest.cpp)
