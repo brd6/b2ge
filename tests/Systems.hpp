@@ -48,11 +48,9 @@ class CollisionSystem :
     addComponentRequired<Sprite, Player>();
   }
 
-  void check()
+  std::size_t getEntitiesSize()
   {
-    auto &entities = getEntities();
-
-    std::cout << "check size: " << entities.size() << std::endl;
+    return getEntities().size();
   }
 
 };

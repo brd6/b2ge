@@ -92,7 +92,7 @@ namespace b2ge
 
     for (auto &it : mEntitiesFiltered)
       {
-	if (((entity.mComponentBitset.to_ulong() & it.first) == entity.mComponentBitset.to_ulong()))
+	if (((entity.mComponentBitset.to_ulong() & it.first) == it.first))
 	  componentFilterGroupIds.push_back(it.first);
       }
 

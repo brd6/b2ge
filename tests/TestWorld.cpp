@@ -46,32 +46,67 @@ TEST(TestWorld, SystemWithEntities)
   EXPECT_EQ(spriteRenderSystem.getEntitiesSize(), 2);
 }
 
-TEST(TestWorld, SystemWithEntities2)
+TEST(TestWorld, SystemWithEntitiesMultiComponentRequiredForSystem)
 {
   b2ge::World world;
   float deltaTime = 0.5f;
 
-  auto &entity1 = world.getEntityManager().create();
-  auto &entity2 = world.getEntityManager().create();
-  auto &entity3 = world.getEntityManager().create();
+  auto &entity1 = world.getEntityManager().create("entity1");
+  auto &entity2 = world.getEntityManager().create("entity2");
+  auto &entity3 = world.getEntityManager().create("entity3");
 
+  // MATCH : CollisionSystem, SpriteRender
   entity1.addComponent<Sprite>().texturePath = "test/texture/path";
   entity1.addComponent<Player>();
+
+  // MATCH :
   entity2.addComponent<Player>().name = "PlayerName";
+
+  // MATCH : SpriteRender
   entity3.addComponent<Sprite>().texturePath = "test/texture/path2";
 
   world.getSystemManager().add<SpriteRenderSystem>();
   world.getSystemManager().add<CollisionSystem>();
 
+  auto &spriteRenderSystem = world.getSystemManager().get<SpriteRenderSystem>();
+  auto &collisionSystem = world.getSystemManager().get<CollisionSystem>();
+
   // Update the world
   world.update(deltaTime);
 
-  world.getSystemManager().get<CollisionSystem>().check();
+  EXPECT_EQ(world.getEntityManager().getActivated().size(), 3);
+  EXPECT_EQ(collisionSystem.getEntitiesSize(), 1);
+  EXPECT_EQ(spriteRenderSystem.getEntitiesSize(), 2);
+}
+
+TEST(TestWorld, SystemWithEntitiesNotWorldUpdate)
+{
+  b2ge::World world;
+  float deltaTime = 0.5f;
+
+  auto &entity1 = world.getEntityManager().create("entity1");
+  auto &entity2 = world.getEntityManager().create("entity2");
+  auto &entity3 = world.getEntityManager().create("entity3");
+
+  // MATCH : CollisionSystem, SpriteRender
+  entity1.addComponent<Sprite>().texturePath = "test/texture/path";
+  entity1.addComponent<Player>();
+
+  // MATCH :
+  entity2.addComponent<Player>().name = "PlayerName";
+
+  // MATCH : SpriteRender
+  entity3.addComponent<Sprite>().texturePath = "test/texture/path2";
+
+  world.getSystemManager().add<SpriteRenderSystem>();
+  world.getSystemManager().add<CollisionSystem>();
 
   auto &spriteRenderSystem = world.getSystemManager().get<SpriteRenderSystem>();
+  auto &collisionSystem = world.getSystemManager().get<CollisionSystem>();
 
-//  EXPECT_EQ(world.getEntityManager().getActivated().size(), 3);
-//  EXPECT_EQ(spriteRenderSystem.getEntitiesSize(), 2);
+  EXPECT_EQ(world.getEntityManager().getActivated().size(), 3);
+  EXPECT_EQ(collisionSystem.getEntitiesSize(), 0);
+  EXPECT_EQ(spriteRenderSystem.getEntitiesSize(), 0);
 }
 
 TEST(TestWorld, KilledEntityInWorld)
