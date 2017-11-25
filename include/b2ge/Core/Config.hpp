@@ -13,6 +13,7 @@ namespace b2ge
   using EntityId = std::size_t;
   using ClassId = std::size_t;
   using SystemId = ClassId;
+  using SceneId = ClassId;
 
   //#define COMPONENT_BITSET 48;
 }

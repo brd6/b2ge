@@ -9,8 +9,8 @@ project(b2ge)
 set(CMAKE_CXX_STANDARD 14)
 
 # Enable flag for dev
-#set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Werror -DDEBUG")
-#set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Werror")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Werror -DDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Werror")
 
 #set(ENABLE_BUILD_TESTS true)
 # cmake -DCMAKE_INSTALL_PREFIX=/usr . && make all install

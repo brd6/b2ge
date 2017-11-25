@@ -5,12 +5,15 @@
 #ifndef EXAMPLE_GAME_HPP
 #define EXAMPLE_GAME_HPP
 
+#include <b2ge/Core/BaseGame.hpp>
+
 namespace example
 {
-    class Game
+    class Game :
+        public b2ge::BaseGame
     {
-    public:
-        void run();
+    protected:
+        void initialize() override;
     };
 }
 

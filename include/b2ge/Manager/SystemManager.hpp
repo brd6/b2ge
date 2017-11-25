@@ -8,8 +8,11 @@
 #include <memory>
 #include <unordered_map>
 #include <iostream>
-#include <b2ge/Core/System.hpp>
-#include <b2ge/Core/SystemUpdatable.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include "b2ge/Core/System.hpp"
+#include "b2ge/Core/SystemUpdatable.hpp"
+#include "b2ge/Core/SystemDrawable.hpp"
+#include "b2ge/Core/SystemEventable.hpp"
 
 namespace b2ge
 {
@@ -25,6 +28,8 @@ namespace b2ge
     std::unordered_map<SystemId, SystemPtr> mSystems;
 
     std::unordered_map<SystemId, SystemUpdatable *> mSystemUpdatables;
+    std::unordered_map<SystemId, SystemDrawable *> mSystemDrawables;
+    std::unordered_map<SystemId, SystemEventable *> mSystemEventables;
 
     World *mWorld{nullptr};
 
@@ -55,6 +60,14 @@ namespace b2ge
       if (systemUpdatable != nullptr)
 	mSystemUpdatables[system->mId] = systemUpdatable;
 
+      auto systemDrawable = dynamic_cast<SystemDrawable *>(system);
+      if (systemDrawable != nullptr)
+	mSystemDrawables[system->mId] = systemDrawable;
+
+      auto systemEventable = dynamic_cast<SystemEventable *>(system);
+      if (systemEventable != nullptr)
+	mSystemEventables[system->mId] = systemEventable;
+
       return *system;
     }
 
@@ -83,6 +96,9 @@ namespace b2ge
 
       if (mSystemUpdatables.count(systemId) == 1)
 	mSystemUpdatables.erase(systemId);
+
+      if (mSystemDrawables.count(systemId) == 1)
+	mSystemDrawables.erase(systemId);
     }
 
     template <typename TSystem>
@@ -99,6 +115,9 @@ namespace b2ge
 
     void update(float deltaTime);
 
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+
+    void processEvents(sf::Event event);
   };
 }
 

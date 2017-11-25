@@ -29,8 +29,8 @@ namespace b2ge
   }
 
   System::System() :
-  	mWorld(nullptr),
 	mId(0),
+	mWorld(nullptr),
 	mComponentRequiredBitset(0)
   {
 

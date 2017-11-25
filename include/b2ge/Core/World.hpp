@@ -7,6 +7,7 @@
 
 #include <b2ge/Manager/EntityManager.hpp>
 #include <b2ge/Manager/SystemManager.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace b2ge
 {
@@ -22,6 +23,9 @@ namespace b2ge
     virtual ~World() = default;
 
     void update(float deltaTime);
+    void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+    void processEvents(sf::Event event);
+
 
     EntityManager &getEntityManager();
 

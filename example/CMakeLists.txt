@@ -33,10 +33,11 @@ endif()
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 find_package(SFML REQUIRED graphics window audio system)
+find_package(B2GE REQUIRED)
 
 # Include directory
-set(B2GE_INCLUDE ${CMAKE_SOURCE_DIR}/include)
-include_directories(${SFML_INCLUDE_DIR} ${B2GE_INCLUDE} ${CMAKE_SOURCE_DIR}/include)
+set(EXAMPLE_INCLUDE ${CMAKE_SOURCE_DIR}/include)
+include_directories(${SFML_INCLUDE_DIR} ${B2GE_INCLUDE_DIR} ${EXAMPLE_INCLUDE})
 
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE INCLUDE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp)
@@ -49,7 +50,7 @@ set(SOURCE_FILES ${SOURCE_FILES} ${INCLUDE_FILES})
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 # Link library
-target_link_libraries(${PROJECT_NAME} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${B2GE_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${B2GE_LIBRARIES} ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
 
 # Install
 install(TARGETS ${PROJECT_NAME}

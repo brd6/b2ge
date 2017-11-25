@@ -2,12 +2,15 @@
 // Created by brd6 on 23/11/17.
 //
 
-#include <Game.hpp>
+#include "../include/Game.hpp"
+#include "../include/MainScene.hpp"
 
-namespace example {
-
-    void Game::run()
+namespace example
+{
+    void Game::initialize()
     {
-        // TODO
+        mSceneManager.add("Main", new MainScene());
+
+//        mSceneManager.setStart()
     }
 }

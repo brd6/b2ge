@@ -2,8 +2,8 @@
 // Created by brd6 on 31/08/2017.
 //
 
-#include <b2ge/Manager/SystemManager.hpp>
-#include <b2ge/Core/World.hpp>
+#include "b2ge/Manager/SystemManager.hpp"
+#include "b2ge/Core/World.hpp"
 
 namespace b2ge
 {
@@ -25,5 +25,21 @@ namespace b2ge
     {
       it.second->update(deltaTime);
     }
+  }
+
+  void SystemManager::draw(sf::RenderTarget &target, sf::RenderStates states) const
+  {
+    for (auto &it : mSystemDrawables)
+      {
+	it.second->draw(target, states);
+      }
+  }
+
+  void SystemManager::processEvents(sf::Event event)
+  {
+    for (auto &it : mSystemEventables)
+      {
+	it.second->processEvents(event);
+      }
   }
 }

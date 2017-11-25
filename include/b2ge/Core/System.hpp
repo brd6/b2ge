@@ -55,12 +55,12 @@ namespace b2ge
 
     EntitiesMap const &getEntities() const;
 
-    virtual void initialize() {}
-
    public:
     System();
 
     virtual ~System() = default;
+
+    virtual void initialize() {}
 
   };
 }
