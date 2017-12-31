@@ -10,7 +10,7 @@
 namespace b2ge
 {
   class SystemUpdatable :
-  	public System
+  	public virtual System
   {
    public:
     virtual void update(float deltaTime) = 0;

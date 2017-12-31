@@ -37,7 +37,7 @@ namespace b2ge
     auto &transform = entity->getComponent<Transform>();
 
     states.texture = &sprite.getTexture();
-    states.transform = transform.getTransform();
+    states.transform *= transform.getTransform();
 
     target.draw(sprite.getSprite(), states);
   }

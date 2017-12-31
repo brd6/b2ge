@@ -35,8 +35,6 @@ namespace b2ge
 
       std::string const &getName() const;
 
-      void initialize();
-
       void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
       void update(float deltaTime);
       virtual void processEvents(sf::Event event) {};
@@ -45,6 +43,7 @@ namespace b2ge
       virtual void destroy() {};
 
      private:
+      void initialize();
       void executeProcessEvents(sf::Event event);
     };
 }

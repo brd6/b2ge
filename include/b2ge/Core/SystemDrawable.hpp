@@ -11,7 +11,7 @@
 namespace b2ge
 {
   class SystemDrawable:
-  	public System
+  	public virtual System
   {
    public:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const = 0;

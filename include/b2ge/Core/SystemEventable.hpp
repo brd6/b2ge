@@ -11,7 +11,7 @@
 namespace b2ge
 {
   class SystemEventable :
-  	public System
+  	public virtual System
   {
    public:
     virtual void processEvents(sf::Event event) = 0;
