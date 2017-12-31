@@ -35,6 +35,7 @@ namespace b2ge
 
      private:
       sf::Texture &getResourceTexture(const std::string &basic_string);
+
     };
 }
 

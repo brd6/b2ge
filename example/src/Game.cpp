@@ -30,6 +30,6 @@ namespace example
             }
         }
         else if (event.type == sf::Event::Closed)
-            Game::getInstance()->quit();
+	  Game::getInstance()->quit();
     }
 }

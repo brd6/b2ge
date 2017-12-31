@@ -10,7 +10,6 @@
 
 namespace b2ge
 {
-
   Scene::Scene()
   {
     mWorld.getSystemManager().add<SpriteRendererSystem>();
@@ -29,11 +28,6 @@ namespace b2ge
     return mName;
   }
 
-  void Scene::update(float deltaTime)
-  {
-    mWorld.update(deltaTime);
-  }
-
   void Scene::initialize()
   {
     create();
@@ -43,5 +37,11 @@ namespace b2ge
   {
     mWorld.processEvents(event);
     processEvents(event);
+  }
+
+  void Scene::executeUpdate(float deltaTime)
+  {
+    mWorld.update(deltaTime);
+    update(deltaTime);
   }
 }

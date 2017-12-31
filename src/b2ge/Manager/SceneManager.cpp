@@ -102,6 +102,6 @@ namespace b2ge
   {
     auto &currentScene = getCurrent();
 
-    currentScene.update(deltaTime);
+    currentScene.executeUpdate(deltaTime);
   }
 }
