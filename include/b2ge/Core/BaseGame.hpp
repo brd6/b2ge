@@ -49,6 +49,7 @@ namespace b2ge
 
    protected:
     virtual void initialize() = 0;
+    virtual void processEvents(sf::Event event) {};
 
    private:
     void createWindow();

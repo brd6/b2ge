@@ -12,12 +12,14 @@
 
 namespace b2ge
 {
+  class SceneManager;
     class Scene :
             public sf::Drawable
     {
      protected:
       std::string mName;
       World mWorld;
+      SceneManager *mSceneManager;
       //      SceneId mId;
       friend class SceneManager;
 

@@ -12,34 +12,34 @@
 
 namespace b2ge
 {
-    class ResourceManager
-    {
-    private:
-        std::map<std::string, std::unique_ptr<sf::Texture>> mResourceTextures;
-        std::map<std::string, std::unique_ptr<sf::Font>> mResourceFonts;
-        std::map<std::string, std::unique_ptr<sf::SoundBuffer>> mResourceSoundBuffers;
-        std::map<std::string, std::unique_ptr<sf::Music>> mResourceMusics;
-        std::map<std::string, std::unique_ptr<sf::Image>> mResourceImages;
+  class ResourceManager
+  {
+   private:
+    std::map<std::string, std::unique_ptr<sf::Texture>> mResourceTextures;
+    std::map<std::string, std::unique_ptr<sf::Font>> mResourceFonts;
+    std::map<std::string, std::unique_ptr<sf::SoundBuffer>> mResourceSoundBuffers;
+    std::map<std::string, std::unique_ptr<sf::Music>> mResourceMusics;
+    std::map<std::string, std::unique_ptr<sf::Image>> mResourceImages;
 
-    private:
-        ResourceManager() = default;
+   private:
+    ResourceManager() = default;
 
-    public:
-        ~ResourceManager() = default;
+   public:
+    ~ResourceManager() = default;
 
-        // delete
-        ResourceManager(ResourceManager const &) = delete;
-        ResourceManager &operator=(ResourceManager const &) = delete;
+    // delete
+    ResourceManager(ResourceManager const &) = delete;
+    ResourceManager &operator=(ResourceManager const &) = delete;
 
-        sf::Texture &getTexture(std::string const &name);
-        sf::Font &getFont(std::string const &name);
-        sf::SoundBuffer &getSoundBuffer(std::string const &name);
-        sf::Music &getMusic(std::string const &name);
-        sf::Image &getImage(std::string const &name);
+    sf::Texture &getTexture(std::string const &name);
+    sf::Font &getFont(std::string const &name);
+    sf::SoundBuffer &getSoundBuffer(std::string const &name);
+    sf::Music &getMusic(std::string const &name);
+    sf::Image &getImage(std::string const &name);
 
-        static ResourceManager *getInstance();
+    static ResourceManager *getInstance();
 
-    };
+  };
 }
 
 #endif //B2GE_RESOURCEMANAGER_HPP

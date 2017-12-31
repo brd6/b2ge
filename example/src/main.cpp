@@ -2,7 +2,7 @@
 // Created by brd6 on 23/11/17.
 //
 
-#include "../include/Game.hpp"
+#include "Game.hpp"
 
 int main()
 {

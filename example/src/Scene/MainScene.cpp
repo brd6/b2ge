@@ -7,7 +7,7 @@
 #include <b2ge/Component/Sprite.hpp>
 #include <b2ge/Component/Text.hpp>
 #include <Resources.hpp>
-#include "MainScene.hpp"
+#include "Scene/MainScene.hpp"
 #include "Game.hpp"
 
 namespace example
@@ -37,7 +37,9 @@ namespace example
 
         btnCmp.onClickEvent = [&](sf::Event event, b2ge::Button &button) {
             std::cout << "Button click!" << std::endl;
-            
+
+            mSceneManager->change("Gameplay");
+
             btnSpriteCmp.setPosition(100, 100);
         };
 
@@ -45,18 +47,6 @@ namespace example
 
     void MainScene::processEvents(sf::Event event)
     {
-        if (event.type == sf::Event::KeyPressed)
-        {
-            switch(event.key.code)
-            {
-                case sf::Keyboard::Escape:
-                    Game::getInstance()->quit();
-                    break;
-                default:
-                    break;
-            }
-        }
-        else if (event.type == sf::Event::Closed)
-            Game::getInstance()->quit();
+        //
     }
 }

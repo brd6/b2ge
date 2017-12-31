@@ -2,6 +2,7 @@
 // Created by brd6 on 25/11/17.
 //
 
+#include <b2ge/Component/Transform.hpp>
 #include "b2ge/System/ButtonSystem.hpp"
 
 namespace b2ge
@@ -9,7 +10,7 @@ namespace b2ge
 
   ButtonSystem::ButtonSystem()
   {
-    addComponentRequired<Button, Sprite>();
+    addComponentRequired<Button, Sprite, Transform>();
   }
 
   void ButtonSystem::processEvents(sf::Event event)
@@ -27,10 +28,11 @@ namespace b2ge
   {
     auto &button = entity->getComponent<Button>();
     auto &sprite = entity->getComponent<Sprite>();
+    auto &transform = entity->getComponent<Transform>();
 
     if (event.type == sf::Event::MouseButtonReleased)
       {
-	auto rect = getSpriteRectangleButton(sprite);;
+	auto rect = getSpriteRectangleButton(sprite, transform);;
 	if (rect.contains(event.mouseButton.x, event.mouseButton.y))
 	  {
 	    callCallableEvent(button.onClickEvent, event, button);
@@ -38,7 +40,7 @@ namespace b2ge
       }
     else if (event.type == sf::Event::MouseMoved)
       {
-	auto rect = getSpriteRectangleButton(sprite);
+	auto rect = getSpriteRectangleButton(sprite, transform);
 	auto oldStatus = button.status;
 	button.status = Button::Status::None;
 	const sf::Vector2f mousePos(event.mouseMove.x, event.mouseMove.y);
@@ -66,10 +68,10 @@ namespace b2ge
       callback(event, button);
   }
 
-  sf::FloatRect ButtonSystem::getSpriteRectangleButton(Sprite &sprite) const
+  sf::FloatRect ButtonSystem::getSpriteRectangleButton(Sprite &sprite, Transform &transform) const
   {
-    const sf::Vector2f pos = sprite.getPosition();
-    const sf::Vector2f size = getSpriteSize(sprite);
+    const sf::Vector2f pos = transform.getPosition();
+    const sf::Vector2f size = sprite.getSize();
     sf::FloatRect rect;
 
     rect.left = pos.x;
@@ -78,12 +80,5 @@ namespace b2ge
     rect.height = size.y;
 
     return rect;
-  }
-
-  sf::Vector2f ButtonSystem::getSpriteSize(Sprite const &sprite) const
-  {
-    sf::FloatRect rect = sprite.getGlobalBounds();
-
-    return {rect.width, rect.height};
   }
 }

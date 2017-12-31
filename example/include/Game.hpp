@@ -14,6 +14,8 @@ namespace example
     {
     protected:
         void initialize() override;
+
+        void processEvents(sf::Event event) override;
     };
 }
 

@@ -7,6 +7,7 @@
 
 #include "b2ge/Component/Button.hpp"
 #include "b2ge/Core/SystemEventable.hpp"
+#include "b2ge/Component/Transform.hpp"
 
 namespace b2ge
 {
@@ -20,8 +21,7 @@ namespace b2ge
    private:
     void processEventForEntity(std::shared_ptr<Entity> entity, sf::Event event);
     void callCallableEvent(Button::ButtonEventCallable, sf::Event event, Button &button);
-    sf::FloatRect getSpriteRectangleButton(Sprite &sprite) const;
-    sf::Vector2f getSpriteSize(Sprite const &sprite) const;
+    sf::FloatRect getSpriteRectangleButton(Sprite &sprite, Transform &transform) const;
   };
 }
 

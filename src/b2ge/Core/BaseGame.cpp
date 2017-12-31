@@ -67,6 +67,7 @@ namespace b2ge
     mSceneManager.lock();
     while (mWindow.pollEvent(event))
       {
+	processEvents(event);
 	mSceneManager.processEvents(event);
       }
     mSceneManager.unlock();

@@ -23,6 +23,7 @@ namespace b2ge
     std::unique_ptr<Scene> scenePtr{scene};
 
     scene->mName = name;
+    scene->mSceneManager = this;
 
     mScenes.emplace_back(std::move(scenePtr));
 

@@ -10,12 +10,20 @@
 
 namespace b2ge
 {
-    class SpriteSystem :
+    class SpriteRendererSystem :
         public SystemDrawable
     {
      public:
-      SpriteSystem();
+      using EntityPtr = std::shared_ptr<Entity>;
+
+     public:
+      SpriteRendererSystem();
       void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+     private:
+      void processEntity(EntityPtr entity,
+			 sf::RenderTarget &target,
+			 sf::RenderStates states) const;
     };
 }
 

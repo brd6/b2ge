@@ -3,7 +3,7 @@
 //
 
 #include "b2ge/System/TextSystem.hpp"
-#include "b2ge/System/SpriteSystem.hpp"
+#include "b2ge/System/SpriteRendererSystem.hpp"
 #include "b2ge/Core/Scene.hpp"
 #include "b2ge/System/ButtonSystem.hpp"
 
@@ -12,7 +12,7 @@ namespace b2ge
 
   Scene::Scene()
   {
-    mWorld.getSystemManager().add<SpriteSystem>();
+    mWorld.getSystemManager().add<SpriteRendererSystem>();
     mWorld.getSystemManager().add<TextSystem>();
     mWorld.getSystemManager().add<ButtonSystem>();
   }
