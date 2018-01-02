@@ -3,6 +3,7 @@
 //
 
 #include <b2ge/System/AnimatedSpriteRendererSystem.hpp>
+#include <b2ge/System/TextButtonSystem.hpp>
 #include "b2ge/System/TextSystem.hpp"
 #include "b2ge/System/SpriteRendererSystem.hpp"
 #include "b2ge/Core/Scene.hpp"
@@ -15,6 +16,7 @@ namespace b2ge
     mWorld.getSystemManager().add<SpriteRendererSystem>();
     mWorld.getSystemManager().add<TextSystem>();
     mWorld.getSystemManager().add<ButtonSystem>();
+    mWorld.getSystemManager().add<TextButtonSystem>();
     mWorld.getSystemManager().add<AnimatedSpriteRendererSystem>();
   }
 

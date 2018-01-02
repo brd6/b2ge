@@ -96,6 +96,7 @@ namespace b2ge
   void BaseGame::quit()
   {
     running = false;
+    mSceneManager.destroy();
   }
 
   BaseGame *BaseGame::getInstance()

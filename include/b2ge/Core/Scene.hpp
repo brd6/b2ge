@@ -20,7 +20,6 @@ namespace b2ge
       std::string mName;
       World mWorld;
       SceneManager *mSceneManager;
-      //      SceneId mId;
       friend class SceneManager;
 
      public:

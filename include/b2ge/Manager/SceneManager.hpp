@@ -37,7 +37,10 @@ namespace b2ge
     void change(std::string const &sceneName);
 
     void processEvents(sf::Event event);
-    void update(float d);
+    void update(float deltaTime);
+
+    void destroy();
+
    private:
     bool isValidSceneIndex(unsigned int sceneIndex) const;
     void doChangeScene();

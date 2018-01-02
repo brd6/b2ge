@@ -11,12 +11,33 @@
 namespace b2ge
 {
   class Text :
-  	public Component,
-	public sf::Text
+  	public Component
   {
+   private:
+    sf::Text mSfText;
+    unsigned int mTextSize;
+    std::string mFontName;
+    friend class TextSystem;
+
    public:
+    Text();
+
     void setFont(const std::string &fontName);
     sf::Vector2f getSize() const;
+
+    void setText(std::string const &text);
+    sf::String const &getText() const;
+
+    void setTextSize(unsigned int size);
+    unsigned int getTextSize() const;
+
+    void setTextColor(const sf::Color &color);
+    sf::Color const &getTextColor() const;
+
+    std::string const &getFont() const;
+
+    void setStyle(sf::Uint32 style);
+    sf::Uint32 getStyle() const;
   };
 }
 

@@ -2,8 +2,8 @@
 // Created by brd6 on 25/11/17.
 //
 
-#ifndef B2GE_BUTTON_HPP
-#define B2GE_BUTTON_HPP
+#ifndef B2GE_TEXTBUTTON_HPP
+#define B2GE_TEXTBUTTON_HPP
 
 #include <SFML/Window/Event.hpp>
 #include <functional>
@@ -11,11 +11,11 @@
 
 namespace b2ge
 {
-  class Button :
+  class TextButton :
   	public Component
   {
    public:
-    using ButtonEventCallable = std::function<void (const sf::Event &event, Button &self)>;
+    using ButtonEventCallable = std::function<void (const sf::Event &event, TextButton &self)>;
 
     ButtonEventCallable onClickEvent;
     ButtonEventCallable onMouseEnterEvent;
@@ -30,9 +30,9 @@ namespace b2ge
     Status status;
 
    public:
-    Button();
-    ~Button() = default;
+    TextButton();
+    ~TextButton() = default;
   };
 }
 
-#endif //B2GE_BUTTON_HPP
+#endif //B2GE_TEXTBUTTON_HPP

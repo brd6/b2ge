@@ -13,8 +13,17 @@ namespace b2ge
    public SystemDrawable
   {
    public:
+    using EntityPtr = std::shared_ptr<Entity>;
+
+   public:
     TextSystem();
-    void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+    void draw(sf::RenderTarget &target,
+	      sf::RenderStates states) const override;
+
+   private:
+    void processEntity(EntityPtr entity,
+		       sf::RenderTarget &target,
+		       sf::RenderStates states) const;
   };
 
 }

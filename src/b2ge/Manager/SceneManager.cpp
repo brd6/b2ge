@@ -104,4 +104,10 @@ namespace b2ge
 
     currentScene.executeUpdate(deltaTime);
   }
+
+  void SceneManager::destroy()
+  {
+    if (isValidSceneIndex(mCurrentSceneIndex))
+      getCurrent().destroy();
+  }
 }
