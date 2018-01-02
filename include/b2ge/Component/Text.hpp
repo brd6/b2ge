@@ -10,13 +10,14 @@
 
 namespace b2ge
 {
-  class Text :
-  	public Component
+  struct Text :
+   public Component
   {
    private:
     sf::Text mSfText;
     unsigned int mTextSize;
     std::string mFontName;
+
     friend class TextSystem;
 
    public:

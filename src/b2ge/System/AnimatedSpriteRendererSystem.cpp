@@ -19,11 +19,11 @@ namespace b2ge
 
   void AnimatedSpriteRendererSystem::update(float deltaTime)
   {
-    auto &entities = getEntities();
+    auto entities = getEntities();
 
     for (auto &it : entities)
       {
-	processUpdateEntity(it.second, deltaTime);
+	processUpdateEntity(it, deltaTime);
       }
   }
 
@@ -59,11 +59,11 @@ namespace b2ge
   void AnimatedSpriteRendererSystem::draw(sf::RenderTarget &target,
 					  sf::RenderStates states) const
   {
-    auto &entities = getEntities();
+    auto entities = getEntities();
 
     for (auto &it : entities)
       {
-	processDrawEntity(it.second, target, states);
+	processDrawEntity(it, target, states);
       }
   }
 

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iostream>
 #include <b2ge/Manager/EntityManager.hpp>
+#include <b2ge/Manager/SystemManager.hpp>
 
 namespace b2ge
 {
@@ -138,10 +139,14 @@ namespace b2ge
 	if (entity->isActive() &&
 	    !mEntitiesFiltered[componentFilterGroupId].count(entity->getId()))
 	{
-	  mEntitiesFiltered[componentFilterGroupId][entity->getId()] = entity;
+	    mEntitiesFiltered[componentFilterGroupId][entity->getId()] = entity;
+	    mSystemManager->addEntity(entity, componentFilterGroupId);
 	}
 	else
-	  mEntitiesFiltered[componentFilterGroupId].erase(entity->getId());
+	  {
+	    mEntitiesFiltered[componentFilterGroupId].erase(entity->getId());
+	    mSystemManager->removeEntity(entity, componentFilterGroupId);
+	  }
       }
   }
 

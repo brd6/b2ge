@@ -16,11 +16,11 @@ namespace b2ge
 
   void TextSystem::draw(sf::RenderTarget &target, sf::RenderStates states) const
   {
-    auto &entities = getEntities();
+    auto entities = getEntities();
 
     for (auto &it : entities)
       {
-	processEntity(it.second, target, states);
+	processEntity(it, target, states);
       }
   }
 

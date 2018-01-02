@@ -18,6 +18,7 @@ namespace b2ge
 
   using ComponentFilterGroupId = unsigned long;
   using EntitiesMap = std::unordered_map<EntityId, std::shared_ptr<Entity>>;
+  using EntitiesVector = std::vector<std::shared_ptr<Entity>>;
 
   class System
   {
@@ -29,6 +30,8 @@ namespace b2ge
     World *mWorld;
 
     std::bitset<COMPONENT_BITSET> mComponentRequiredBitset;
+
+    EntitiesVector mEntities;
 
 //   protected:
 //    EntityManager &mEntityManager;
@@ -53,7 +56,10 @@ namespace b2ge
 
     ComponentFilterGroupId getComponentFilterGroupId() const;
 
-    EntitiesMap const &getEntities() const;
+    EntitiesVector getEntities() const;
+
+    void addEntity(std::shared_ptr<Entity> entity);
+    void removeEntity(std::shared_ptr<Entity> entity);
 
    public:
     System();

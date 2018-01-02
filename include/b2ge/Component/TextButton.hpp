@@ -11,11 +11,12 @@
 
 namespace b2ge
 {
-  class TextButton :
-  	public Component
+  struct TextButton :
+   public Component
   {
    public:
-    using ButtonEventCallable = std::function<void (const sf::Event &event, TextButton &self)>;
+    using ButtonEventCallable = std::function<void(const sf::Event &event,
+						   TextButton &self)>;
 
     ButtonEventCallable onClickEvent;
     ButtonEventCallable onMouseEnterEvent;

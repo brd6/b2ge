@@ -9,10 +9,10 @@
 
 namespace b2ge
 {
-  class SpriteRenderer :
-  	public Component
+  struct SpriteRenderer :
+   public Component
   {
-    
+
   };
 }
 

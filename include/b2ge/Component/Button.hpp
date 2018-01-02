@@ -11,7 +11,7 @@
 
 namespace b2ge
 {
-  class Button :
+  struct Button :
   	public Component
   {
    public:

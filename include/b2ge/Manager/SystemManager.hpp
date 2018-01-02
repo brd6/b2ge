@@ -118,6 +118,11 @@ namespace b2ge
     void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
     void processEvents(sf::Event event);
+
+    void addEntity(std::shared_ptr<Entity> entity,
+		   ComponentFilterGroupId groupId);
+    void removeEntity(std::shared_ptr<Entity> entity,
+		      ComponentFilterGroupId groupId);
   };
 }
 

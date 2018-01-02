@@ -10,11 +10,11 @@
 
 namespace b2ge
 {
-  class Transform :
-  	public Component,
+  struct Transform :
+   	public Component,
 	public sf::Transformable
   {
-
+    float drawOrder = 0.5f;
   };
 }
 

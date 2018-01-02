@@ -14,11 +14,13 @@ namespace b2ge
   void SpriteRendererSystem::draw(sf::RenderTarget &target,
 				sf::RenderStates states) const
   {
-    auto &entities = getEntities();
+    auto entities = getEntities();
+
+    sortEntities(entities);
 
     for (auto &it : entities)
       {
-	processEntity(it.second, target, states);
+	processEntity(it, target, states);
       }
   }
 
@@ -40,5 +42,17 @@ namespace b2ge
     states.transform *= transform.getTransform();
 
     target.draw(sprite.getSprite(), states);
+  }
+
+  void SpriteRendererSystem::sortEntities(EntitiesVector &entities) const
+  {
+    std::sort(std::begin(entities),
+	      std::end(entities),
+	      [=](std::shared_ptr<Entity> &left,
+		  std::shared_ptr<Entity> &right) {
+		return left->getComponent<Transform>().drawOrder <
+			right->getComponent<Transform>().drawOrder ? 1 : 0;
+    });
+
   }
 }

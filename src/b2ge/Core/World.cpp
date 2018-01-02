@@ -26,6 +26,7 @@ namespace b2ge
   {
     mEntityManager.mWorld = this;
     mSystemManager.mWorld = this;
+    mEntityManager.mSystemManager = &mSystemManager;
   }
 
   void World::draw(sf::RenderTarget &target, sf::RenderStates states) const

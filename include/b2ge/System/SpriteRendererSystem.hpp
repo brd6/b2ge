@@ -24,6 +24,7 @@ namespace b2ge
       void processEntity(EntityPtr entity,
 			 sf::RenderTarget &target,
 			 sf::RenderStates states) const;
+      void sortEntities(EntitiesVector &entities) const;
     };
 }
 

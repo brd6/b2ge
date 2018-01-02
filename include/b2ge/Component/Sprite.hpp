@@ -11,32 +11,33 @@
 
 namespace b2ge
 {
-    class Sprite :
-        public Component
-    {
-    private:
-      std::string mTexturePath;
-      sf::Sprite mSprite;
-      friend class SpriteRendererSystem;
+  struct Sprite :
+   public Component
+  {
+   private:
+    std::string mTexturePath;
+    sf::Sprite mSprite;
 
-    public:
-      explicit Sprite(std::string const &texturePath);
-      void setTexturePath(std::string const &texturePath);
-      void setTextureRect(sf::IntRect rect);
-      sf::Texture const &getTexture() const;
-      sf::IntRect getTextureRect() const;
-      void setColor(sf::Color const &color);
-      sf::Color getColor() const;
-      sf::FloatRect getTextureBounds() const;
-      sf::Vector2f getSize() const;
+    friend class SpriteRendererSystem;
 
-     private:
-      sf::Sprite const &getSprite() const;
+   public:
+    explicit Sprite(std::string const &texturePath);
+    void setTexturePath(std::string const &texturePath);
+    void setTextureRect(sf::IntRect rect);
+    sf::Texture const &getTexture() const;
+    sf::IntRect getTextureRect() const;
+    void setColor(sf::Color const &color);
+    sf::Color getColor() const;
+    sf::FloatRect getTextureBounds() const;
+    sf::Vector2f getSize() const;
 
-     private:
-      sf::Texture &getResourceTexture(const std::string &basic_string);
+   private:
+    sf::Sprite const &getSprite() const;
 
-    };
+   private:
+    sf::Texture &getResourceTexture(const std::string &basic_string);
+
+  };
 }
 
 #endif //B2GE_SPRITE_HPP

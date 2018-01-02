@@ -8,14 +8,16 @@
 
 namespace b2ge
 {
-  EntitiesMap const &System::getEntities() const
+  EntitiesVector System::getEntities() const
   {
     if (mWorld == nullptr)
       throw std::runtime_error("World must be initialise before");
 
-    ComponentFilterGroupId groupId = getComponentFilterGroupId();
+//    ComponentFilterGroupId groupId = getComponentFilterGroupId();
 
-    return mWorld->getEntityManager().getByComponentFilterGroupId(groupId);
+//    auto &entitiesTmp = mWorld->getEntityManager().getByComponentFilterGroupId(groupId);
+
+    return mEntities;
   }
 
   SystemId System::getId() const
@@ -34,5 +36,23 @@ namespace b2ge
 	mComponentRequiredBitset(0)
   {
 
+  }
+
+  void System::addEntity(std::shared_ptr<Entity> entity)
+  {
+    mEntities.push_back(entity);
+  }
+
+  void System::removeEntity(std::shared_ptr<Entity> entity)
+  {
+    auto it = std::find_if(std::begin(mEntities),
+			   std::end(mEntities), [&entity](auto &e){
+       return entity->getId() == e->getId();
+     });
+
+    if (it == std::end(mEntities))
+      return;
+
+    mEntities.erase(it);
   }
 }

@@ -13,6 +13,7 @@
 namespace b2ge
 {
   class Scene;
+  class SystemManager;
 
   using EntitiesMap = std::unordered_map<EntityId, std::shared_ptr<Entity>>;
 
@@ -24,6 +25,7 @@ namespace b2ge
     friend class SystemManager;
 
     World *mWorld{nullptr};
+    SystemManager *mSystemManager{nullptr};
 
     EntitiesMap mEntitiesActivated;
 

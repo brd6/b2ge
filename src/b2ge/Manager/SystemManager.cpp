@@ -42,4 +42,28 @@ namespace b2ge
 	it.second->processEvents(event);
       }
   }
+
+  void SystemManager::addEntity(std::shared_ptr<Entity> entity,
+				ComponentFilterGroupId groupId)
+  {
+    for (auto &it : mSystems)
+      {
+	if (it.second->getComponentFilterGroupId() == groupId)
+	  {
+	    it.second->addEntity(entity);
+	  }
+      }
+  }
+
+  void SystemManager::removeEntity(std::shared_ptr<Entity> entity,
+				   ComponentFilterGroupId groupId)
+  {
+    for (auto &it : mSystems)
+      {
+	if (it.second->getComponentFilterGroupId() == groupId)
+	  {
+	    it.second->removeEntity(entity);
+	  }
+      }
+  }
 }

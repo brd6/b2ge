@@ -15,11 +15,11 @@ namespace b2ge
 
   void ButtonSystem::processEvents(sf::Event event)
   {
-    auto &entities = getEntities();
+    auto entities = getEntities();
 
     for (auto &it : entities)
       {
-	processEventForEntity(it.second, event);
+	processEventForEntity(it, event);
       }
   }
 
