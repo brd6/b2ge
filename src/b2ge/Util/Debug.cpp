@@ -3,75 +3,41 @@
 //
 
 #include <iostream>
-
-#if WIN32
-
-#include <windows.h>
-
-#endif // WIN32
-
 #include <b2ge/Util/Debug.hpp>
 
 namespace b2ge
 {
-  void Debug::log(std::string const &message, DebugType type)
+  std::ostream *Debug::mOs;
+  Debug::DebugType mDefaultType = Debug::DebugType::Info;
+
+  Debug::Debug(Debug::DebugType type) :
+   mType(type)
   {
-    switch (type)
-      {
-	case DebugType::Error :
-	  Debug::logError(message);
-	break;
-	case DebugType::Warning:
-	  Debug::logWarning(message);
-	break;
-	default:
-	  writeMessage("[Info] " + message, DebugType::Info);
-	break;
-      }
+    if (mOs == nullptr)
+      init(mType);
   }
 
-  void Debug::logWarning(std::string const &message)
+  void Debug::init(Debug::DebugType type, std::ostream &os)
   {
-    writeMessage("[Warning] " + message, DebugType::Warning);
+    mOs = &os;
   }
 
-  void Debug::logError(std::string const &message)
+  std::string Debug::getCurrentDateTime()
   {
-    writeMessage("[Error] " + message, DebugType::Error);
+    time_t now = time(nullptr);
+    tm  tstruct{};
+    char buf[80];
+
+    tstruct = *localtime(&now);
+    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+    return buf;
   }
 
-  void Debug::writeMessage(std::string const &message, DebugType type)
+  Debug &Debug::setType(Debug::DebugType type)
   {
-#if WIN32
-    writeMessageInColor(message, type);
-#else
-    std::cout << message << std::endl;
-#endif // WIN32
+    mType = type;
+    return *this;
   }
 
-  void Debug::writeMessageInColor(std::string const &message, DebugType type)
-  {
-#if WIN32
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    int colorCmp;
-
-    switch (type)
-      {
-	// foreground + background * 16
-	case DebugType::Error:
-	  colorCmp = 12 + 0 * 16;
-	break;
-	case DebugType::Warning:
-	  colorCmp = 14 + 0 * 16;
-	break;
-	case DebugType::Info:
-	  colorCmp = 15 + 0 * 16;
-	break;
-	default:
-	  break;
-      }
-    SetConsoleTextAttribute(hConsole, colorCmp);
-    std::cout << message << std::endl;
-#endif // WIN32
-  }
 }

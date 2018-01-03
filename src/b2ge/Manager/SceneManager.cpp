@@ -7,36 +7,17 @@
 namespace b2ge
 {
   SceneManager::SceneManager() :
-   mCurrentSceneIndex(0),
-   mNextSceneIndex(0),
    mIsSceneLocked(false),
    mChangeSceneAtNextFrame(false)
   {
   }
 
-  /**
-   * Add a scene to the sceneManager
-   * @param scene
-   */
-  void SceneManager::add(std::string const &name, Scene *scene)
-  {
-    std::unique_ptr<Scene> scenePtr{scene};
-
-    scene->mName = name;
-    scene->mSceneManager = this;
-
-    mScenes.emplace_back(std::move(scenePtr));
-
-    if (mScenes.size() == 1)
-      setStart(name);
-  }
-
   Scene& SceneManager::getCurrent()
   {
-    if (!isValidSceneIndex(mCurrentSceneIndex))
-      throw std::out_of_range("Scene index is not correct");
+    if (!isValidSceneName(mCurrentSceneName))
+      throw std::out_of_range("Scene name is not correct");
 
-    return *mScenes[mCurrentSceneIndex];
+    return *mScenes[mCurrentSceneName];
   }
 
   void SceneManager::setStart(std::string const &sceneName)
@@ -47,21 +28,13 @@ namespace b2ge
 
   void SceneManager::change(std::string const &sceneName)
   {
-    auto it = std::find_if(std::begin(mScenes), std::end(mScenes),
-			   [sceneName](std::unique_ptr<Scene> const &scene) {
-			     return scene->getName() == sceneName;
-			   });
-
-    if (it == std::end(mScenes))
-      throw std::invalid_argument("Scene name not found");
-
-    mNextSceneIndex = (unsigned int)(it - std::begin(mScenes));
+    mNextSceneName = sceneName;
     mChangeSceneAtNextFrame = true;
   }
 
-  bool SceneManager::isValidSceneIndex(unsigned int sceneIndex) const
+  bool SceneManager::isValidSceneName(std::string const &name) const
   {
-    return (sceneIndex >= 0 && sceneIndex < mScenes.size());
+    return mScenes.count(name) > 0;
   }
 
   void SceneManager::lock()
@@ -81,14 +54,14 @@ namespace b2ge
 
   void SceneManager::doChangeScene()
   {
-    // destroy current scene if possible
-    if (isValidSceneIndex(mCurrentSceneIndex))
-      getCurrent().destroy();
+//    destroyCurrentScene();
 
-    // create new scene
-    mCurrentSceneIndex = mNextSceneIndex;
+    auto prevSceneName = mCurrentSceneName;
+    mCurrentSceneName = mNextSceneName;
 
     getCurrent().initialize();
+
+    destroyScene(prevSceneName);
   }
 
   void SceneManager::processEvents(sf::Event event)
@@ -107,7 +80,23 @@ namespace b2ge
 
   void SceneManager::destroy()
   {
-    if (isValidSceneIndex(mCurrentSceneIndex))
-      getCurrent().destroy();
+//    destroyScene(mCurrentSceneIndex);
+//    destroyCurrentScene();
+  }
+
+  Scene::Ptr SceneManager::createScene(const std::string &name)
+  {
+    if (mSceneFactories.count(name) <= 0)
+      throw std::logic_error("Scene " + name + " not found");
+
+    return mSceneFactories[name]();
+  }
+
+  void SceneManager::destroyScene(std::string const &name)
+  {
+    if (!isValidSceneName(name))
+      return;
+
+    getCurrent().destroy();
   }
 }

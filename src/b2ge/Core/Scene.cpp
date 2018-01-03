@@ -11,7 +11,8 @@
 
 namespace b2ge
 {
-  Scene::Scene()
+  Scene::Scene() :
+   mIsInitialized(false)
   {
     mWorld.getSystemManager().add<SpriteRendererSystem>();
     mWorld.getSystemManager().add<TextSystem>();
@@ -32,7 +33,11 @@ namespace b2ge
 
   void Scene::initialize()
   {
+    if (mIsInitialized)
+      return;
+
     create();
+    mIsInitialized = true;
   }
 
   void Scene::executeProcessEvents(sf::Event event)

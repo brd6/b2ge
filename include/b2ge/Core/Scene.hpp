@@ -16,6 +16,9 @@ namespace b2ge
     class Scene :
             public sf::Drawable
     {
+     private:
+      bool mIsInitialized;
+
      protected:
       std::string mName;
       World mWorld;
@@ -23,7 +26,7 @@ namespace b2ge
       friend class SceneManager;
 
      public:
-      using Ptr = std::unique_ptr<Scene>();
+      using Ptr = std::unique_ptr<Scene>;
 
     public:
       Scene();
