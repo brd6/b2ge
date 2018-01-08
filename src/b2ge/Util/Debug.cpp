@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <b2ge/Util/Debug.hpp>
+#include <ctime>
 
 namespace b2ge
 {

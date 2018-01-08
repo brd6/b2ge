@@ -25,7 +25,7 @@ Clone the repository
 
 	git clone git@github.com:brd6/b2ge.git
 	cd b2ge
-    	git checkout light
+    	git checkout master
     	git submodule update --init --recursive
     
 Installation
@@ -34,8 +34,13 @@ Installation
 	cd build
 	cmake ..
 	make test
-	make install	
+	make example
+	make install
 
 Enjoy!
+
+# Windows prerequisite
+
+set SFML_ROOT in CmakeLists.txt or in windows path
 
 ### Usage

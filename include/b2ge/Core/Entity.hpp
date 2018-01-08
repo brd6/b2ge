@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+#include <array>
 #include <b2ge/Core/Component.hpp>
 #include <b2ge/Core/ClassIdHandler.hpp>
 
