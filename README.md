@@ -42,5 +42,6 @@ Enjoy!
 # Windows prerequisite
 
 set SFML_ROOT in CmakeLists.txt or in windows path
+https://stackoverflow.com/questions/21387504/cmake-and-make-in-windows
 
 ### Usage
