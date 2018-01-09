@@ -9,18 +9,18 @@ project(b2ge)
 set(CMAKE_CXX_STANDARD 14)
 
 # Enable flag for dev
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
-        "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Werror -DDEBUG")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Werror")
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-    set(warnings "/W4 /WX /EHsc")
-endif()
+#if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
+#        "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+#    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Werror -DDEBUG")
+#    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall -Werror")
+#elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+#    set(warnings "/W4 /WX /EHsc")
+#endif()
 
 #set(ENABLE_BUILD_TESTS true)
 # cmake -DCMAKE_INSTALL_PREFIX=/usr . && make all install
 
-SET(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build (Debug or Release)")
+SET(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build (Debug or Release)")
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     add_definitions(-DDEBUG)
