@@ -73,4 +73,14 @@ namespace b2ge
     return mSfText.getStyle();
   }
 
+  void Text::setScale(sf::Vector2f const &scale)
+  {
+    mSfText.setScale(scale);
+  }
+
+  void Text::setScale(float x, float y)
+  {
+    mSfText.setScale(x, y);
+  }
+
 }

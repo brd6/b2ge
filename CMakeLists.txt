@@ -20,7 +20,7 @@ set(CMAKE_CXX_STANDARD 14)
 #set(ENABLE_BUILD_TESTS true)
 # cmake -DCMAKE_INSTALL_PREFIX=/usr . && make all install
 
-SET(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build (Debug or Release)")
+SET(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build (Debug or Release)")
 
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     add_definitions(-DDEBUG)

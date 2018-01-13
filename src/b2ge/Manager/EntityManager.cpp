@@ -152,6 +152,11 @@ namespace b2ge
 
   void EntityManager::removeEntitiesDestroyed()
   {
+    for (auto &it : mEntitiesDestroyed)
+      {
+	it.second->removeAllComponents();
+      }
+
     mEntitiesDestroyed.erase(std::begin(mEntitiesDestroyed), std::end(mEntitiesDestroyed));
     mEntitiesDestroyed.clear();
   }
@@ -159,6 +164,25 @@ namespace b2ge
   void EntityManager::registerSystemComponentFilterGroupId(ComponentFilterGroupId id)
   {
     mEntitiesFiltered[id] = {};
+  }
+
+  void EntityManager::destroy(Entity &entity)
+  {
+    entity.destroy();
+  }
+
+  void EntityManager::destroy(std::string const &name)
+  {
+    auto &entity = get(name);
+
+    destroy(entity);
+  }
+
+  void EntityManager::destroy(std::size_t id)
+  {
+    auto &entity = get(id);
+
+    destroy(entity);
   }
 
 }

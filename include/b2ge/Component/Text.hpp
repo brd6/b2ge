@@ -35,6 +35,9 @@ namespace b2ge
     void setTextColor(const sf::Color &color);
     sf::Color const &getTextColor() const;
 
+    void setScale(sf::Vector2f const &scale);
+    void setScale(float x, float y);
+
     std::string const &getFont() const;
 
     void setStyle(sf::Uint32 style);

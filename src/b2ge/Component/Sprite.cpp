@@ -69,4 +69,14 @@ namespace b2ge
   {
     return mSprite;
   }
+
+  void Sprite::setScale(sf::Vector2f const &scale)
+  {
+    mSprite.setScale(scale);
+  }
+
+  void Sprite::setScale(float x, float y)
+  {
+    mSprite.setScale(x, y);
+  }
 }

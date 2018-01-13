@@ -62,6 +62,10 @@ namespace b2ge
 
     Entity &create(std::string const &name);
 
+    void destroy(Entity &entity);
+    void destroy(std::string const &name);
+    void destroy(std::size_t id);
+
    private:
     void onEntityStateChanged(Entity const &entity);
 

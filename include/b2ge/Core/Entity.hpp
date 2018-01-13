@@ -13,6 +13,7 @@
 #include <array>
 #include <b2ge/Core/Component.hpp>
 #include <b2ge/Core/ClassIdHandler.hpp>
+#include <iostream>
 
 namespace b2ge
 {
@@ -102,7 +103,7 @@ namespace b2ge
     TComponent &getComponent() const
     {
       if (!hasComponent<TComponent>())
-	throw std::logic_error("Access to a not entity's component");
+	throw std::logic_error("Access to a not entity's component on " + mName);
 
       auto component(mComponentArray[getClassTypeId<TComponent>()]);
       return *static_cast<TComponent *>(component);
@@ -112,7 +113,7 @@ namespace b2ge
     void removeComponent()
     {
       if (!hasComponent<TComponent>())
-	throw std::invalid_argument("Access to a not entity's component");
+	throw std::invalid_argument("Access to a not entity's component during remove");
 
       auto currComponent = mComponentArray[getClassTypeId<TComponent>()];
 

@@ -31,6 +31,9 @@ namespace b2ge
     sf::FloatRect getTextureBounds() const;
     sf::Vector2f getSize() const;
 
+    void setScale(sf::Vector2f const &scale);
+    void setScale(float x, float y);
+
    private:
     sf::Sprite const &getSprite() const;
 
