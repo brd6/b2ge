@@ -21,6 +21,9 @@ namespace b2ge
 
   class Entity
   {
+   public:
+    using Ptr = std::shared_ptr<b2ge::Entity>;
+
    private:
     friend class EntityManager;
 
@@ -48,6 +51,9 @@ namespace b2ge
 
     std::string mName;
 
+    std::vector<ClassId> mComponentsRemoved;
+    std::bitset<COMPONENT_BITSET> mComponentsRemovedBitset;
+
    private:
     static EntityId getNextId();
 
@@ -61,8 +67,7 @@ namespace b2ge
     template<typename TComponent>
     void unregisterComponent()
     {
-      mComponentArray[getClassTypeId<TComponent>()] = nullptr;
-      mComponentBitset[getClassTypeId<TComponent>()] = false;
+      unregisterComponent(getClassTypeId<TComponent>());
     }
 
    public:
@@ -96,6 +101,8 @@ namespace b2ge
       mComponents.emplace_back(std::move(componentPtr));
       registerComponent<TComponent>(component);
 
+      registerEntityStateChanged();
+
       return *component;
     };
 
@@ -115,22 +122,12 @@ namespace b2ge
       if (!hasComponent<TComponent>())
 	throw std::invalid_argument("Access to a not entity's component during remove");
 
-      auto currComponent = mComponentArray[getClassTypeId<TComponent>()];
+      auto id = getClassTypeId<TComponent>();
 
-      auto it = std::find_if(std::begin(mComponents),
-			     std::end(mComponents),
-			     [currComponent]
-				     (std::unique_ptr<Component> const &component) {
-			       return component.get() == currComponent;
-			     });
+      mComponentsRemoved.emplace_back(id);
+      mComponentsRemovedBitset[id] = true;
 
-      if (it == std::end(mComponents))
-	return;
-
-      it->reset();
-      mComponents.erase(it);
-
-      unregisterComponent<TComponent>();
+      registerEntityStateChanged();
     }
 
     void removeAllComponents();
@@ -147,6 +144,15 @@ namespace b2ge
 
     std::string const &getName() const;
 
+   private:
+    void clearAllRemovedComponents();
+    void clearRemovedComponent(ClassId id);
+
+    void unregisterComponent(ClassId i);
+
+    bool hasComponentsRemoved() const;
+
+    void registerEntityStateChanged();
   };
 }
 

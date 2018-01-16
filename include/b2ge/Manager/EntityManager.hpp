@@ -76,10 +76,15 @@ namespace b2ge
     void applyEntityUpdate(std::shared_ptr<Entity> &entity);
 
     void applyEntityFilteredUpdate(std::shared_ptr<Entity> &entity);
+    void applyEntityFilteredRemoved(std::shared_ptr<Entity> &entity);
 
-    std::vector<ComponentFilterGroupId> const getEntityComponentFilterGroupIds(Entity const &entity) const;
+    std::vector<ComponentFilterGroupId> const
+    getEntityComponentFilterGroupIds(Entity const &entity) const;
+    std::vector<ComponentFilterGroupId>
+    const getEntityComponentsRemovedFilterGroupIds(Entity const &entity) const;
 
     void removeEntitiesDestroyed();
+    void removeEntitiesComponentsDestroyed();
 
     void registerSystemComponentFilterGroupId(ComponentFilterGroupId id);
   };

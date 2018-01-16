@@ -5,6 +5,8 @@
 #ifndef _COMPONENT_H_
 # define _COMPONENT_H_
 
+#include <b2ge/Core/Config.hpp>
+
 namespace b2ge
 {
   class Entity;

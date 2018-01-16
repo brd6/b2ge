@@ -78,10 +78,59 @@ namespace b2ge
 
   void Entity::removeAllComponents()
   {
+//    for (auto &it : mComponents)
+//      {
+//      }
     mComponents.erase(std::begin(mComponents), std::end(mComponents));
     mComponents.clear();
 
     mComponentArray.fill(nullptr);
     mComponentBitset.reset();
   }
+
+  void Entity::clearAllRemovedComponents()
+  {
+    for (auto &it : mComponentsRemoved)
+      {
+	clearRemovedComponent(it);
+      }
+    mComponentsRemoved.clear();
+    mComponentsRemovedBitset.reset();
+  }
+
+  void Entity::clearRemovedComponent(ClassId id)
+  {
+    auto currComponent =  mComponentArray[id];
+
+    auto it = std::find_if(std::begin(mComponents),
+			   std::end(mComponents),
+			   [currComponent]
+			    (std::unique_ptr<Component> const &component) {
+			     return component.get() == currComponent;
+			   });
+
+    if (it == std::end(mComponents))
+      return;
+
+    it->reset();
+    mComponents.erase(it);
+    unregisterComponent(id);
+  }
+
+  void Entity::unregisterComponent(ClassId id)
+  {
+    mComponentArray[id] = nullptr;
+    mComponentBitset[id] = false;
+  }
+
+  bool Entity::hasComponentsRemoved() const
+  {
+    return !mComponentsRemoved.empty();
+  }
+
+  void Entity::registerEntityStateChanged()
+  {
+    mWorld->getEntityManager().onEntityStateChanged(*this);
+  }
+
 }

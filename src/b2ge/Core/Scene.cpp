@@ -14,11 +14,11 @@ namespace b2ge
   Scene::Scene() :
    mIsInitialized(false)
   {
-    mWorld.getSystemManager().add<SpriteRendererSystem>();
     mWorld.getSystemManager().add<TextSystem>();
     mWorld.getSystemManager().add<ButtonSystem>();
     mWorld.getSystemManager().add<TextButtonSystem>();
     mWorld.getSystemManager().add<AnimatedSpriteRendererSystem>();
+    mWorld.getSystemManager().add<SpriteRendererSystem>();
   }
 
   void Scene::draw(sf::RenderTarget &target, sf::RenderStates states) const

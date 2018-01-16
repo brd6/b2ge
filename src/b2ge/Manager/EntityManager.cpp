@@ -20,9 +20,18 @@ namespace b2ge
 			   [name](auto &entity) {
 			     return (entity.second->getName() == name);
 			   });
-    if (it == std::end(mEntitiesActivated))
-      throw std::logic_error("Entity '" + name + "' not found.");
-    return *(it->second);
+
+    if (it != std::end(mEntitiesActivated))
+      return *(it->second);
+
+    it = std::find_if(std::begin(mEntitiesDeactivated), std::end(mEntitiesDeactivated),
+		      [name](auto &entity) {
+			return (entity.second->getName() == name);
+		      });
+    if (it != std::end(mEntitiesDeactivated))
+      return *(it->second);
+
+    throw std::logic_error("Entity '" + name + "' not found.");
   }
 
   Entity &EntityManager::create()
@@ -76,9 +85,11 @@ namespace b2ge
 	  continue;
 
 	applyEntityUpdate(entity);
+	applyEntityFilteredRemoved(entity);
 	applyEntityFilteredUpdate(entity);
       }
     removeEntitiesDestroyed();
+//    removeEntitiesComponentsDestroyed();
     mEntitiesIdStateChanged.clear();
   }
 
@@ -87,13 +98,28 @@ namespace b2ge
     mEntitiesIdStateChanged.push_back(entity.getId());
   }
 
-  std::vector<ComponentFilterGroupId> const EntityManager::getEntityComponentFilterGroupIds(const Entity &entity) const
+  std::vector<ComponentFilterGroupId> const
+  EntityManager::getEntityComponentFilterGroupIds(const Entity &entity) const
   {
     std::vector<ComponentFilterGroupId> componentFilterGroupIds;
 
     for (auto &it : mEntitiesFiltered)
       {
 	if (((entity.mComponentBitset.to_ulong() & it.first) == it.first))
+	  componentFilterGroupIds.push_back(it.first);
+      }
+
+    return componentFilterGroupIds;
+  }
+
+  std::vector<ComponentFilterGroupId> const
+  EntityManager::getEntityComponentsRemovedFilterGroupIds(const Entity &entity) const
+  {
+    std::vector<ComponentFilterGroupId> componentFilterGroupIds;
+
+    for (auto &it : mEntitiesFiltered)
+      {
+	if (((entity.mComponentsRemovedBitset.to_ulong() & it.first) == it.first))
 	  componentFilterGroupIds.push_back(it.first);
       }
 
@@ -137,17 +163,35 @@ namespace b2ge
     for (auto componentFilterGroupId : entityComponentFilterGroupId)
       {
 	if (entity->isActive() &&
-	    !mEntitiesFiltered[componentFilterGroupId].count(entity->getId()))
-	{
+	 !mEntitiesFiltered[componentFilterGroupId].count(entity->getId()))
+	  {
 	    mEntitiesFiltered[componentFilterGroupId][entity->getId()] = entity;
 	    mSystemManager->addEntity(entity, componentFilterGroupId);
-	}
-	else
+	  }
+	else if (!entity->isActive())
 	  {
 	    mEntitiesFiltered[componentFilterGroupId].erase(entity->getId());
 	    mSystemManager->removeEntity(entity, componentFilterGroupId);
 	  }
       }
+  }
+
+  void EntityManager::applyEntityFilteredRemoved(std::shared_ptr<Entity> &entity)
+  {
+    if (!entity->hasComponentsRemoved())
+      return;
+    auto entityComponentFilterGroupId = getEntityComponentsRemovedFilterGroupIds(*entity);
+
+    for (auto componentFilterGroupId : entityComponentFilterGroupId)
+      {
+	if (mEntitiesFiltered[componentFilterGroupId].count(entity->getId()))
+	  {
+	    mEntitiesFiltered[componentFilterGroupId].erase(entity->getId());
+	    mSystemManager->removeEntity(entity, componentFilterGroupId);
+	  }
+      }
+
+    removeEntitiesComponentsDestroyed();
   }
 
   void EntityManager::removeEntitiesDestroyed()
@@ -185,4 +229,12 @@ namespace b2ge
     destroy(entity);
   }
 
+  void EntityManager::removeEntitiesComponentsDestroyed()
+  {
+    for (auto &it : mEntitiesActivated)
+      {
+	if ((it.second->hasComponentsRemoved()))
+	  it.second->clearAllRemovedComponents();
+      }
+  }
 }
