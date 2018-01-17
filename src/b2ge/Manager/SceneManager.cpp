@@ -63,6 +63,7 @@ namespace b2ge
     mCurrentSceneName = mNextSceneName;
 
     getCurrent().initialize();
+
     getCurrent().onEnter();
 
     destroyScene(prevSceneName);
