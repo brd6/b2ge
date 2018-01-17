@@ -56,10 +56,14 @@ namespace b2ge
   {
 //    destroyCurrentScene();
 
+    if (isValidSceneName(mCurrentSceneName))
+      getCurrent().onExit();
+
     auto prevSceneName = mCurrentSceneName;
     mCurrentSceneName = mNextSceneName;
 
     getCurrent().initialize();
+    getCurrent().onEnter();
 
     destroyScene(prevSceneName);
   }

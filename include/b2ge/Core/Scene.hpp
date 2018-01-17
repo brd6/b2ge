@@ -43,6 +43,8 @@ namespace b2ge
       virtual void processEvents(sf::Event event) {};
       virtual void create() = 0;
       virtual void destroy() {};
+      virtual void onExit() {};
+      virtual void onEnter() {};
 
      private:
       void initialize();
