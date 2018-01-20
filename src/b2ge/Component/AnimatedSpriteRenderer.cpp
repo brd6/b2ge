@@ -19,9 +19,12 @@ namespace b2ge
   }
 
   void AnimatedSpriteRenderer::add(std::string const &name,
-			    AnimationPtr animation)
+			    Animation::Ptr animation)
   {
     mAnimations[name] = std::move(animation);
+
+    if (getCurrentAnimationName().empty())
+      play(name);
   }
 
   void AnimatedSpriteRenderer::play(std::string const &name, bool looped)
@@ -88,7 +91,7 @@ namespace b2ge
       }
   }
 
-  AnimatedSpriteRenderer::AnimationPtr AnimatedSpriteRenderer::getCurrentAnimation() const
+  AnimatedSpriteRenderer::Animation::Ptr AnimatedSpriteRenderer::getCurrentAnimation() const
   {
     return mAnimations.at(mCurrentAnimationName);
   }
@@ -151,5 +154,10 @@ namespace b2ge
   void AnimatedSpriteRenderer::addFrame(int frame)
   {
     setCurrentFrame(mCurrentFrame + frame);
+  }
+
+  bool AnimatedSpriteRenderer::has(std::string const &name) const
+  {
+    return mAnimations.count(name) > 0;
   }
 }

@@ -103,4 +103,9 @@ namespace b2ge
   {
     return game;
   }
+
+  sf::RenderWindow const &BaseGame::getRenderWindow() const
+  {
+    return mWindow;
+  }
 }

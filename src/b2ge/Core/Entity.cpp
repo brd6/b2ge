@@ -46,8 +46,9 @@ namespace b2ge
   {
     if (mWorld != nullptr && !mIsDestroyed)
     {
-      mIsDestroyed = true;
-      mWorld->getEntityManager().onEntityStateChanged(*this);
+	mIsActive = false;
+	mIsDestroyed = true;
+	mWorld->getEntityManager().onEntityStateChanged(*this);
     }
   }
 

@@ -21,6 +21,8 @@ namespace b2ge
   {
     struct Animation
     {
+      using Ptr = std::shared_ptr<Animation>;
+
       using Frames = std::vector<sf::IntRect>;
 
       Animation *addFrame(sf::IntRect frame)
@@ -40,17 +42,17 @@ namespace b2ge
       friend class AnimatedSpriteRenderer;
     };
 
-    using AnimationPtr = std::shared_ptr<Animation>;
     static const int VERTICES_SIZE = 4;
     static const sf::PrimitiveType VERTEX_TYPE = sf::Quads;
 
     AnimatedSpriteRenderer();
 
+    bool has(std::string const &name) const;
     void play(std::string const &name, bool looped = true);
     void pause();
     void stop();
     void setLooped(bool looped);
-    void add(std::string const &name, AnimationPtr animation);
+    void add(std::string const &name, Animation::Ptr animation);
     void setFrameTime(float time);
     std::string const &getCurrentAnimationName() const;
     bool isPaused() const;
@@ -62,7 +64,7 @@ namespace b2ge
     unsigned long getCurrentAnimationFrameSize() const;
 
    private:
-    AnimationPtr getCurrentAnimation() const;
+    Animation::Ptr getCurrentAnimation() const;
     void setFrame(int frame);
     void setCurrentTime(float time);
     void addTime(float time);
@@ -73,7 +75,7 @@ namespace b2ge
     friend class AnimatedSpriteRendererSystem;
 
    private:
-    std::unordered_map<std::string, AnimationPtr> mAnimations;
+    std::unordered_map<std::string, Animation::Ptr> mAnimations;
     sf::Vertex mVertices[VERTICES_SIZE];
     bool mPaused;
     bool mLopped;

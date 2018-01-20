@@ -45,6 +45,8 @@ namespace b2ge
     unsigned int getWidth() const;
     unsigned int getHeight() const;
 
+    sf::RenderWindow const &getRenderWindow() const;
+
     static BaseGame *getInstance();
 
    protected:
